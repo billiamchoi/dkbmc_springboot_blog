@@ -61,6 +61,14 @@ public class QuestionController {
         return "redirect:/question/list";
     }
 
+    @PostMapping("/remove/{id}")
+    public String removeQuestion(@PathVariable Long id) {
+
+        questionService.remove(id);
+        return "redirect:/question/list";
+
+    }
+
 
 
 

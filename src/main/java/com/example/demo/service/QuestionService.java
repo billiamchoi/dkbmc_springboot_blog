@@ -6,12 +6,14 @@ import com.example.demo.domain.QuestionDTO;
 
 public interface QuestionService {
 
-	List<QuestionDTO> list();
-
 	void create(QuestionDTO question);
 
-	void  modify(QuestionDTO question);
-
 	Object get(Long id);
+
+	List<QuestionDTO> list();
+
+	void modify(QuestionDTO question);
+
+	void remove(Long id);
 
 }
