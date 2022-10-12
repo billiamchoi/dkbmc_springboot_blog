@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +26,11 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public void create(Map<String, Object> param, ModelMap model) {
-		QuestionDTO qd = new QuestionDTO();
-		qd.setId( (int) param.get("id") );
-		qd.setSubject(param.get("subject")+"");
-		qd.setContent(param.get("content")+"");
-		repository.save(qd);
+	public void create(QuestionDTO question)
+	{
+		question.setCreate_date(new Date());
+		question.setModify_date(new Date());
+		this.repository.save(question);
 	}
-	
+
 }

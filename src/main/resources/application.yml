@@ -1,0 +1,36 @@
+spring:
+  thymeleaf:
+    cache: 'false'
+    prefix: /WEB-INF/views/
+    suffix: .html
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+      format_sql: 'true'
+      show_sql: 'true'
+    hibernate:
+      ddl-auto: none
+  datasource:
+    password: 1214choiZ!
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/blogdb
+  nodeValue: .main.banner-mode=off
+  sql:
+    init:
+      mode: always
+      platform: postgres
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        SQL: DEBUG
+      springframework: ERROR
+server:
+  port: ${PORT:8080}
