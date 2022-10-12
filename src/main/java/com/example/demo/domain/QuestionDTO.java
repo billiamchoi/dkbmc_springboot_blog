@@ -20,7 +20,7 @@ public class QuestionDTO {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     //What is GeneratedValue
-    private int id;
+    private Long id;
 
     private String content;
     private String subject;

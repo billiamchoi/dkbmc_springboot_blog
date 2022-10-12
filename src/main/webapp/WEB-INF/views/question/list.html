@@ -30,7 +30,11 @@
         <tbody>
         <tr th:each="question : ${questionList}">
             <td th:text="${question.id}">Id</th>
-            <td th:text="${question.subject}">Subject</td>
+            <td>
+                <a  th:href="${'/question/' + {question.id}}" th:text="${question.subject}">
+                    Subject
+                </a>
+            </td>
             <td th:text="${question.create_date}">Create_date</td>
             <td th:text="${question.modify_date}">Modify_date</td>
         </tr>

@@ -1,13 +1,12 @@
 package com.example.demo.service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import com.example.demo.domain.QuestionDTO;
 import com.example.demo.repository.QuestionRepository;
@@ -31,6 +30,14 @@ public class QuestionServiceImpl implements QuestionService{
 		question.setCreate_date(new Date());
 		question.setModify_date(new Date());
 		this.repository.save(question);
+	}
+
+	@Override
+	public QuestionDTO get(Long id) {
+		QuestionDTO q = new QuestionDTO();
+		Optional<QuestionDTO> qq = repository.findById(id);
+		q = qq.get();
+		return q;
 	}
 
 }

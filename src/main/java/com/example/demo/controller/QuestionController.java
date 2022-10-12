@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import com.example.demo.service.QuestionService;
 
 @Controller
 @RequestMapping("/question")
+@Slf4j
 public class QuestionController {
 
     @Autowired
@@ -26,10 +29,17 @@ public class QuestionController {
         return "redirect:/question/list";
     }
 
-
     @GetMapping("/create")
     public String questionCreate() {
         return "/question/create";
+    }
+
+    @GetMapping("/{id}")
+    public String get(@PathVariable Long id, Model model) {
+
+        model.addAttribute("question", questionService.get(id));
+        return "/question/get";
+
     }
 
     @GetMapping("list")
