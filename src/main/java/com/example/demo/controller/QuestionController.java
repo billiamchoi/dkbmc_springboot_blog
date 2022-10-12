@@ -20,12 +20,17 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping("/create")
+    public String questionCreate() {
+        return "/question/create";
+    }
+
     @GetMapping("list")
     public String questionList(@RequestParam Map<String, Object> param, ModelMap model) {
         List<QuestionDTO> questionList = (List<QuestionDTO>) questionService.list();
         model.put("questionList", questionList);
 
-        return "questionList";
+        return "/question/list";
     }
 
 
