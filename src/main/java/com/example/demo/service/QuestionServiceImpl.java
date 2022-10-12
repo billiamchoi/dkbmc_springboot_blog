@@ -33,6 +33,16 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
+	public void modify(QuestionDTO question) {
+		QuestionDTO q = new QuestionDTO();
+		Optional<QuestionDTO> qq = repository.findById(question.getId());
+		Date creted_date = qq.get().getCreate_date();
+		question.setCreate_date(creted_date);
+		question.setModify_date(new Date());
+		this.repository.save(question);
+	}
+
+	@Override
 	public QuestionDTO get(Long id) {
 		QuestionDTO q = new QuestionDTO();
 		Optional<QuestionDTO> qq = repository.findById(id);

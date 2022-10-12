@@ -7,9 +7,9 @@
 <!-- Navigation-->
 <div th:insert="includes/navbar.html  :: nav">  </div>
 <div class="container">
-    <h3>질문 등록</h3>
+    <h3 th:text="${{question.id}+'번 질문'}">#번 질문</h3>
     <hr>
-    <form role="form" action="/question/create" method="post">
+    <form>
         <div class="mt-4 form-group">
             <label class="mb-2">제목</label>
             <input type="text" th:value="${question.subject}" name="subject" class="form-control" readonly="true">
@@ -26,8 +26,8 @@
             <label class="mb-2">수정 일자</label>
             <input type="text" th:value="${question.modify_date}" name="subject" class="form-control" readonly="true">
         </div>
-        <button type="submit" class="mt-4 btn btn-primary mb-2">수정하기</button>
     </form>
+    <button class="mt-4 btn btn-primary mb-2" th:onclick="|location.href='@{/question/modify/{questionId}(questionId=${question.id})}'|" >수정하기</button>
 </div>
 </body>
 <script>

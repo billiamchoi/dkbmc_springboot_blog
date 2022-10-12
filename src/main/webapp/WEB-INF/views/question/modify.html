@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="includes/header.html :: head">
+</head>
+<body>
+
+<!-- Navigation-->
+<div th:insert="includes/navbar.html  :: nav">  </div>
+<div class="container">
+  <h3 th:text="${{question.id}+'번 질문 수정'}">#번 질문</h3>
+  <hr>
+  <form role="form" action="/question/modify" method="post">
+    <div class="mt-4 form-group">
+      <input type="hidden" th:value="${question.id}" name="id" class="form-control" readonly="readonly" >
+    </div>
+    <div class="mt-4 form-group">
+      <label class="mb-2">제목</label>
+      <input type="text" th:value="${question.subject}" name="subject" class="form-control" >
+    </div>
+    <div class="mt-4 form-group">
+      <label class="mb-2">내용</label>
+      <textarea name="content" th:text="${question.content}" class="form-control" rows="3" ></textarea>
+    </div>
+    <div class="mt-4 form-group">
+      <label class="mb-2">생성 일자</label>
+      <input type="text" th:value="${question.create_date}"  class="form-control" readonly="true">
+    </div>
+    <div class="mt-4 form-group">
+      <label class="mb-2">수정 일자</label>
+      <input type="text" th:value="${question.modify_date}" class="form-control" readonly="true">
+    </div>
+    <button type="submit" class="mt-4 btn btn-primary mb-2">수정하기</button>
+  </form>
+</div>
+</body>
+<script>
+</script>
+</html>

@@ -34,21 +34,34 @@ public class QuestionController {
         return "/question/create";
     }
 
-    @GetMapping("/{id}")
-    public String get(@PathVariable Long id, Model model) {
-
-        model.addAttribute("question", questionService.get(id));
-        return "/question/get";
-
-    }
-
-    @GetMapping("list")
+    @GetMapping("/list")
     public String questionList(@RequestParam Map<String, Object> param, ModelMap model) {
         List<QuestionDTO> questionList = (List<QuestionDTO>) questionService.list();
         model.put("questionList", questionList);
 
         return "/question/list";
     }
+
+    @GetMapping("/detail/{id}")
+    public String get(@PathVariable Long id, Model model) {
+        model.addAttribute("question", questionService.get(id));
+        return "/question/get";
+    }
+
+    @GetMapping("/modify/{id}")
+    public String modify(@PathVariable Long id, Model model) {
+        model.addAttribute("question", questionService.get(id));
+        return "/question/modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifyQuestion(QuestionDTO question) {
+
+        questionService.modify(question);
+        return "redirect:/question/list";
+    }
+
+
 
 
 }

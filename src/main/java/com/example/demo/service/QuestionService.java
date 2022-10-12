@@ -10,6 +10,8 @@ public interface QuestionService {
 
 	void create(QuestionDTO question);
 
+	void  modify(QuestionDTO question);
+
 	Object get(Long id);
 
 }
