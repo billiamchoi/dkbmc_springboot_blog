@@ -16,14 +16,14 @@ import lombok.Setter;
 @Entity
 @Table(name="question")
 public class QuestionDTO {
-	
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	//What is GeneratedValue
-	private int id;
-	
-	private String content;
-	private String subject;
-	private Date create_date;
-	private Date modify_date;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    //What is GeneratedValue
+    private int id;
+
+    private String content;
+    private String subject;
+    private Date create_date;
+    private Date modify_date;
 }
