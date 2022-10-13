@@ -20,7 +20,7 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public List<QuestionDTO> list() {
 		
-		List<QuestionDTO> QuestionList = (List<QuestionDTO>) repository.findAll(); 
+		List<QuestionDTO> QuestionList = (List<QuestionDTO>) repository.findAllByOrderByIdAsc();
 		return QuestionList;
 	}
 
@@ -34,7 +34,6 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public void modify(QuestionDTO question) {
-		QuestionDTO q = new QuestionDTO();
 		Optional<QuestionDTO> qq = repository.findById(question.getId());
 		Date creted_date = qq.get().getCreate_date();
 		question.setCreate_date(creted_date);

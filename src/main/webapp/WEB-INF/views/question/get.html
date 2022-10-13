@@ -70,7 +70,7 @@
             console.log("필요 컨텐츠", textareaValue);
 
             if(operation === 'delete'){
-                //구현해야됨
+                formObj.attr("action", `/answer/remove/${answerId}`).attr("method", "post");
             }else if(operation ==='modify'){
                 formObj.attr("action", "/answer/modify").attr("method", "post");
 

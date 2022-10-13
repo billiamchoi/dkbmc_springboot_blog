@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
@@ -34,6 +35,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<AnswerDTO> listByQuestion(Long id) {
+
         List<AnswerDTO> AnswerList = repository.findAnswerDTOByQuestionId(id);
         return AnswerList;
     }
@@ -53,6 +55,6 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public void remove(Long id) {
-
+        repository.deleteById(id);
     }
 }

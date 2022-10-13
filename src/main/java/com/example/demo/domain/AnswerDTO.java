@@ -3,6 +3,8 @@ package com.example.demo.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,6 +24,7 @@ public class AnswerDTO {
     private String content;
 
     @ManyToOne(targetEntity = QuestionDTO.class, fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="question_id")
     private QuestionDTO question;
 

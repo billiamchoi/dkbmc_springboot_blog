@@ -1,12 +1,9 @@
 package com.example.demo.domain;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,4 +28,7 @@ public class QuestionDTO {
     private Date create_date;
 
     private Date modify_date;
+
+    @OneToMany(mappedBy = "question", orphanRemoval = true)
+    private Set<AnswerDTO> answer;
 }
