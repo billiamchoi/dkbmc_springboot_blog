@@ -25,8 +25,8 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public void create(QuestionDTO question)
-	{
+	public void create(QuestionDTO question) {
+
 		question.setCreate_date(new Date());
 		question.setModify_date(new Date());
 		this.repository.save(question);

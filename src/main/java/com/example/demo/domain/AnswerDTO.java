@@ -26,4 +26,5 @@ public class AnswerDTO {
     private Date create_date;
 
     private Date modify_date;
+
 }

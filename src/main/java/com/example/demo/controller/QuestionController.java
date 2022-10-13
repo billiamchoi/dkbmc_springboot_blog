@@ -27,19 +27,19 @@ public class QuestionController {
     private AnswerService answerService;
 
     @PostMapping("/create")
-    public String createQuestion(QuestionDTO question) {
+    public String questionCreate(QuestionDTO question) {
 
         questionService.create(question);
         return "redirect:/question/list";
     }
 
     @GetMapping("/create")
-    public String questionCreate() {
+    public String questionCreateView() {
         return "/question/create";
     }
 
     @GetMapping("/list")
-    public String questionList(@RequestParam Map<String, Object> param, ModelMap model) {
+    public String questionListView(@RequestParam Map<String, Object> param, ModelMap model) {
         List<QuestionDTO> questionList = (List<QuestionDTO>) questionService.list();
         model.put("questionList", questionList);
 
@@ -47,27 +47,27 @@ public class QuestionController {
     }
 
     @GetMapping("/detail/{id}")
-    public String get(@PathVariable Long id, Model model) {
+    public String questionDetailView(@PathVariable Long id, Model model) {
         model.addAttribute("question", questionService.get(id));
         model.addAttribute("answerList", answerService.listByQuestion(id));
         return "/question/get";
     }
 
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable Long id, Model model) {
+    public String questionModifyView(@PathVariable Long id, Model model) {
         model.addAttribute("question", questionService.get(id));
         return "/question/modify";
     }
 
     @PostMapping("/modify")
-    public String modifyQuestion(QuestionDTO question) {
+    public String questionModify(QuestionDTO question) {
 
         questionService.modify(question);
         return "redirect:/question/list";
     }
 
     @PostMapping("/remove/{id}")
-    public String removeQuestion(@PathVariable Long id) {
+    public String questionRemove(@PathVariable Long id) {
 
         questionService.remove(id);
         return "redirect:/question/list";

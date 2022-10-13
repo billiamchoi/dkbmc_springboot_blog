@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AnswerService {
 
-    void create(AnswerDTO answer);
+    void create(AnswerDTO answer,Long id);
 
     List<AnswerDTO> listByQuestion(Long id);
 

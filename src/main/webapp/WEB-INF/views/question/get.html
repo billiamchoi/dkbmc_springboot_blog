@@ -28,8 +28,11 @@
     <div th:each="answer : ${answerList}">
         <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" readonly="true"></textarea>
     </div>
-    
-    <form>
+
+    <form role="form" action="/answer/create" method="post">
+        <div class="mt-4 form-group">
+            <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true">
+        </div>
         <div class="mt-4 form-group">
             <textarea name="content"  class="mt-3 form-control" rows="5" placeholder="답변을 입력해주세요"></textarea>
         </div>
