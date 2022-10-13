@@ -23,7 +23,10 @@ public class QuestionDTO {
     private Long id;
 
     private String content;
+
     private String subject;
+
     private Date create_date;
+
     private Date modify_date;
 }

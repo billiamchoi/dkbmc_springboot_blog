@@ -2236,7 +2236,7 @@ progress {
   opacity: 1;
 }
 .form-control:disabled, .form-control[readonly] {
-  background-color: #e9ecef;
+  background-color: white;
   opacity: 1;
 }
 .form-control::-webkit-file-upload-button {
@@ -11312,3 +11312,6 @@ html {
 .navbar {
 	margin-bottom: 1rem;
 }
+
+
+

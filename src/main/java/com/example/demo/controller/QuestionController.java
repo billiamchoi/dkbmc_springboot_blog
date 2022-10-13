@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.service.AnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private AnswerService answerService;
 
     @PostMapping("/create")
     public String createQuestion(QuestionDTO question) {
@@ -45,6 +49,7 @@ public class QuestionController {
     @GetMapping("/detail/{id}")
     public String get(@PathVariable Long id, Model model) {
         model.addAttribute("question", questionService.get(id));
+        model.addAttribute("answerList", answerService.listByQuestion(id));
         return "/question/get";
     }
 

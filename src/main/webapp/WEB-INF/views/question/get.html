@@ -18,19 +18,23 @@
             <label class="mb-2">내용</label>
             <textarea name="content" th:text="${question.content}" class="form-control" rows="3" readonly="true"></textarea>
         </div>
-        <div class="mt-4 form-group">
-            <label class="mb-2">생성 일자</label>
-            <input type="text" th:value="${question.create_date}" name="subject" class="form-control" readonly="true">
-        </div>
-        <div class="mt-4 form-group">
-            <label class="mb-2">수정 일자</label>
-            <input type="text" th:value="${question.modify_date}" name="subject" class="form-control" readonly="true">
-        </div>
         <button type="button" class="mt-4 btn btn-primary mb-2" th:onclick="|location.href='@{/question/modify/{questionId}(questionId=${question.id})}'|" >수정하기</button>
         <button type="submit" class="mt-4 btn btn-danger mb-2">삭제하기</button>
     </form>
 
+    <h4 class="mt-3" th:text="${#lists.size(answerList)}+'개의 답변이 있습니다.'"></h4>
+    <hr>
 
+    <div th:each="answer : ${answerList}">
+        <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" readonly="true"></textarea>
+    </div>
+    
+    <form>
+        <div class="mt-4 form-group">
+            <textarea name="content"  class="mt-3 form-control" rows="5" placeholder="답변을 입력해주세요"></textarea>
+        </div>
+        <button type="submit" class="mt-4 btn btn-primary mb-2">답변 등록</button>
+    </form>
 </div>
 </body>
 <script>
