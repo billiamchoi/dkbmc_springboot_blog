@@ -26,4 +26,11 @@ public class AnswerController {
         answerService.create(answer, id);
         return "redirect:/question/detail/"+id;
     }
+
+    @PostMapping("/modify")
+    public String answerModify(AnswerDTO answer, @RequestParam ("question_id") Long id) {
+
+        answerService.modify(answer, id);
+        return "redirect:/question/detail/"+id;
+    }
 }

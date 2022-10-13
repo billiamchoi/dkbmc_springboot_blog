@@ -25,8 +25,18 @@
     <h4 class="mt-3" th:text="${#lists.size(answerList)}+'개의 답변이 있습니다.'"></h4>
     <hr>
 
-    <div th:each="answer : ${answerList}">
-        <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" readonly="true"></textarea>
+    <div id="textarea-container" th:each="answer : ${answerList}">
+        <form class="answer-form" role="form" action="/hi" th:answerId="${answer.id}">
+            <div class="mt-4 form-group">
+                <input type="number" hidden th:value="${answer.id}" name="id" class="form-control" readonly="true" th:answerId="${answer.id}">
+            </div>
+            <div class="mt-4 form-group">
+                <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true" th:answerId="${answer.id}">
+            </div>
+            <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"></textarea>
+            <button type="submit" id="modify" data-oper="modify" th:answerId="${answer.id}">수정</button>
+            <button type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}">삭제</button>
+        </form>
     </div>
 
     <form role="form" action="/answer/create" method="post">
@@ -41,5 +51,36 @@
 </div>
 </body>
 <script>
+    $(document).ready(function () {
+
+        $('button#modify, button#delete').on("click", function(e){
+
+            e.preventDefault();
+            var answerId = $(this).attr("answerId")
+            var formObj = $(`form[answerId=${answerId}]`)
+            var operation = $(this).data("oper");
+            var input = $(`input[answerId=${answerId}]`).clone()
+            var textarea = $(`textarea[answerId=${answerId}]`).clone()
+            console.log("디버깅", input);
+
+
+            var textareaValue = $(`textarea[answerId=${answerId}]`).val();
+            console.log("필요 엔서 아이디",answerId);
+            console.log("필요 액션 종류",operation);
+            console.log("필요 컨텐츠", textareaValue);
+
+            if(operation === 'delete'){
+                //구현해야됨
+            }else if(operation ==='modify'){
+                formObj.attr("action", "/answer/modify").attr("method", "post");
+
+                formObj.empty();
+
+                formObj.append(input);
+                formObj.append(textarea);
+            }
+            formObj.submit();
+        })
+    })
 </script>
 </html>

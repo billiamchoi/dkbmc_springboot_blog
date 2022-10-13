@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -24,6 +25,7 @@ public class AnswerServiceImpl implements AnswerService {
     public void create(AnswerDTO answer, Long id) {
 
         QuestionDTO question = questionRepository.findById(id).get();
+
         answer.setQuestion(question);
         answer.setCreate_date(new Date());
         answer.setModify_date(new Date());
@@ -37,8 +39,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void modify(AnswerDTO answer) {
+    public void modify(AnswerDTO answer, Long id) {
 
+        QuestionDTO question = questionRepository.findById(id).get();
+
+        Optional<AnswerDTO> aa = repository.findById(answer.getId());
+        Date create_date = aa.get().getCreate_date();
+        answer.setQuestion(question);
+        answer.setCreate_date(create_date);
+        answer.setModify_date(new Date());
+        this.repository.save(answer);
     }
 
     @Override
