@@ -28,18 +28,19 @@ public class QuestionController {
 
     @PostMapping("/create")
     public String questionCreate(QuestionDTO question) {
-
         questionService.create(question);
         return "redirect:/question/list";
     }
 
     @GetMapping("/create")
-    public String questionCreateView() {
+    public String questionCreateView(ModelMap model) {
+        model.addAttribute("pageTitle", "질문 등록");
         return "/question/create";
     }
 
     @GetMapping("/list")
     public String questionListView(@RequestParam Map<String, Object> param, ModelMap model) {
+        model.addAttribute("pageTitle", "질문 목록");
         List<QuestionDTO> questionList = (List<QuestionDTO>) questionService.list();
         model.put("questionList", questionList);
 
@@ -48,6 +49,7 @@ public class QuestionController {
 
     @GetMapping("/detail/{id}")
     public String questionDetailView(@PathVariable Long id, Model model) {
+        model.addAttribute("pageTitle", "질문과 답변");
         model.addAttribute("question", questionService.get(id));
         model.addAttribute("answerList", answerService.listByQuestion(id));
         return "/question/get";
@@ -55,6 +57,7 @@ public class QuestionController {
 
     @GetMapping("/modify/{id}")
     public String questionModifyView(@PathVariable Long id, Model model) {
+        model.addAttribute("pageTitle", "질문 수정");
         model.addAttribute("question", questionService.get(id));
         return "/question/modify";
     }

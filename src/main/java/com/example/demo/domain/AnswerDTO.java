@@ -24,7 +24,6 @@ public class AnswerDTO {
     private String content;
 
     @ManyToOne(targetEntity = QuestionDTO.class, fetch = FetchType.LAZY)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="question_id")
     private QuestionDTO question;
 
