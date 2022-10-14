@@ -71,6 +71,7 @@
 
             if(operation === 'delete'){
                 formObj.attr("action", `/answer/remove/${answerId}`).attr("method", "post");
+                formObj.append(input);
             }else if(operation ==='modify'){
                 formObj.attr("action", "/answer/modify").attr("method", "post");
 

@@ -33,9 +33,9 @@ public class AnswerController {
     }
 
     @PostMapping("/remove/{id}")
-    public String answerRemove(@PathVariable Long id) {
+    public String answerRemove(@PathVariable Long id, @RequestParam ("question_id") Long questionId) {
 
         answerService.remove(id);
-        return "redirect:/question/list";
+        return "redirect:/question/detail/"+questionId;
     }
 }
