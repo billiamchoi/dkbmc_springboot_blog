@@ -55,13 +55,13 @@ public class QuestionController {
             inputPageableQ = questionService.searchList(searchKeyword, pageable);
         }
 
-        // SearchTerm needed for later
-        //input of PageDTO.toDtoList
-
         //output of PageDTO.toDtoList
         Page<QuestionDTO> questionDtoList = new PageDTO().toDtoList(inputPageableQ);
         int startPage = Math.max(1, questionDtoList.getPageable().getPageNumber() - 10);
-        int endPage = Math.min(questionDtoList.getTotalPages(), questionDtoList.getPageable().getPageNumber() + 10);
+
+        // 검색결과가 없을때 getTotalPages가 0이 나옴 -> 이를 항상 endPage 변수는 1로 고정
+        int endPage = (questionDtoList.getTotalPages() == 0)? Math.min(questionDtoList.getTotalPages()+1, questionDtoList.getPageable().getPageNumber() + 10)
+                                                            : Math.min(questionDtoList.getTotalPages(), questionDtoList.getPageable().getPageNumber() + 10);
         List<QuestionDTO> questionContentList =  questionDtoList.getContent();
 
 
