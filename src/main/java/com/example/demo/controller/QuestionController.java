@@ -4,9 +4,13 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.domain.PageDTO;
 import com.example.demo.service.AnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -39,11 +43,25 @@ public class QuestionController {
     }
 
     @GetMapping("/list")
-    public String questionListView(@RequestParam Map<String, Object> param, ModelMap model) {
-        model.addAttribute("pageTitle", "질문 목록");
-        List<QuestionDTO> questionList = (List<QuestionDTO>) questionService.list();
-        model.put("questionList", questionList);
+    public String questionListView(@RequestParam Map<String, Object> param, ModelMap model, Pageable pageable) {
 
+        model.addAttribute("pageTitle", "질문 목록");
+
+        // SearchTerm needed for later
+        //input of PageDTO.toDtoList
+        Page<QuestionDTO> inputPageableQ = questionService.list(pageable);
+        //output of PageDTO.toDtoList
+        Page<QuestionDTO> questionDtoList = new PageDTO().toDtoList(inputPageableQ);
+        int startPage = Math.max(1, questionDtoList.getPageable().getPageNumber() - 10);
+        int endPage = Math.min(questionDtoList.getTotalPages(), questionDtoList.getPageable().getPageNumber() + 10);
+        List<QuestionDTO> questionContentList =  questionDtoList.getContent();
+
+
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("questionDtoList", questionDtoList);
+        model.addAttribute("questionList", questionContentList);
         return "/question/list";
     }
 

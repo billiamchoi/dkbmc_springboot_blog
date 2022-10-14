@@ -6,6 +6,8 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.QuestionDTO;
@@ -18,9 +20,9 @@ public class QuestionServiceImpl implements QuestionService{
 	private QuestionRepository repository;
 
 	@Override
-	public List<QuestionDTO> list() {
+	public Page<QuestionDTO> list(Pageable pageable) {
 		
-		List<QuestionDTO> QuestionList = (List<QuestionDTO>) repository.findAllByOrderByIdAsc();
+		Page<QuestionDTO> QuestionList = repository.findAllByOrderByIdAsc(pageable);
 		return QuestionList;
 	}
 

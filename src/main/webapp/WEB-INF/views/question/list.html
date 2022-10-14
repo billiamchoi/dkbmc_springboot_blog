@@ -42,21 +42,20 @@
     </table>
 
     <div>
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="javascript:void(0)" data-page="-1">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li class="page-item active">
-                <a class="page-link" href="javascript:void(0)" data-page="0">0</a>
-            </li>
-            <li class="page-item disabled">
-                <a class="page-link" href="javascript:void(0)" data-page="1">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
+        <!-- 페이징 처리 -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${1 == questionDtoList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber}-1)}" tabindex="-1" aria-disabled="true">이전</a>
+                </li>
+                <li class="page-item" th:classappend="${page == questionDtoList.pageable.pageNumber + 1} ? 'disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" th:href="@{/question/list(page=${page})}" th:text="${page}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${questionDtoList.totalPages == questionDtoList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber} + 1)}">다음</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 </body>

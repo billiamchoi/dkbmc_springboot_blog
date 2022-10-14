@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.domain.QuestionDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface QuestionService {
 
@@ -10,7 +12,7 @@ public interface QuestionService {
 
 	Object get(Long id);
 
-	List<QuestionDTO> list();
+	Page<QuestionDTO> list(Pageable Page);
 
 	void modify(QuestionDTO question);
 
