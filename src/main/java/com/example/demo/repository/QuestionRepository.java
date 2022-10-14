@@ -12,4 +12,7 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionDTO, Long> {
     Page<QuestionDTO> findAllByOrderByIdAsc(Pageable pageable);
+
+//    Page<QuestionDTO> findBySubjectContaining(String searchKeyword, Pageable pageable);
+    Page<QuestionDTO> findBySubjectContainingOrContentContaining(String subject, String content, Pageable pageable);
 }

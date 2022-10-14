@@ -8,11 +8,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface QuestionService {
 
+	Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable);
+
 	void create(QuestionDTO question);
 
 	Object get(Long id);
 
-	Page<QuestionDTO> list(Pageable Page);
+	Page<QuestionDTO> list(Pageable page);
 
 	void modify(QuestionDTO question);
 

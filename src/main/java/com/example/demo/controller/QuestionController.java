@@ -43,13 +43,21 @@ public class QuestionController {
     }
 
     @GetMapping("/list")
-    public String questionListView(@RequestParam Map<String, Object> param, ModelMap model, Pageable pageable) {
+    public String questionListView(@RequestParam Map<String, Object> param, ModelMap model, Pageable pageable, String searchKeyword) {
 
         model.addAttribute("pageTitle", "질문 목록");
 
+        Page<QuestionDTO> inputPageableQ = null;
+
+        if(searchKeyword == null) {
+            inputPageableQ = questionService.list(pageable);
+        } else {
+            inputPageableQ = questionService.searchList(searchKeyword, pageable);
+        }
+
         // SearchTerm needed for later
         //input of PageDTO.toDtoList
-        Page<QuestionDTO> inputPageableQ = questionService.list(pageable);
+
         //output of PageDTO.toDtoList
         Page<QuestionDTO> questionDtoList = new PageDTO().toDtoList(inputPageableQ);
         int startPage = Math.max(1, questionDtoList.getPageable().getPageNumber() - 10);

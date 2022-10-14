@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -24,6 +23,15 @@ public class QuestionServiceImpl implements QuestionService{
 		
 		Page<QuestionDTO> QuestionList = repository.findAllByOrderByIdAsc(pageable);
 		return QuestionList;
+	}
+
+
+	@Override
+	public Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable) {
+
+		Page<QuestionDTO> QuestionSearchList = repository.findBySubjectContainingOrContentContaining(searchKeyword, searchKeyword, pageable);
+		return QuestionSearchList;
+
 	}
 
 	@Override

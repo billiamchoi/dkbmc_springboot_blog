@@ -12,10 +12,12 @@
                 <a class="btn btn-primary" href="/question/create">질문 등록하기</a>
             </div>
             <div class="col-3">
-                <div class="input-group">
-                    <input type="text" id="#" class="form=control" value>
-                    <button class="btn btn-secondary">찾기</button>
-                </div>
+                <form th:action="@{/question/list}" method="get">
+                    <div class="input-group">
+                        <input type="text" name="searchKeyword" class="form=control" value>
+                        <button type="submit" class="btn btn-secondary">찾기</button>
+                    </div>
+                </form>
             </div>
         </div>
         <table class="mt-3 table">
@@ -46,13 +48,13 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${1 == questionDtoList.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber})}" tabindex="-1" aria-disabled="true">이전</a>
+                        <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber}, searchKeyword=${param.searchKeyword})}" tabindex="-1" aria-disabled="true">이전</a>
                     </li>
                     <li class="page-item" th:classappend="${page == questionDtoList.pageable.pageNumber + 1} ? 'disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link" th:href="@{/question/list(page=${page})}" th:text="${page}">1</a>
+                        <a class="page-link" th:href="@{/question/list(page=${page}, searchKeyword=${param.searchKeyword})}" th:text="${page}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${questionDtoList.totalPages == questionDtoList.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber} + 2)}">다음</a>
+                        <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber} + 2, searchKeyword=${param.searchKeyword})}">다음</a>
                     </li>
                 </ul>
             </nav>
