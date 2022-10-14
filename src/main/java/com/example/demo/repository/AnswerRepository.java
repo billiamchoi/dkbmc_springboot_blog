@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<AnswerDTO, Long> {
    List<AnswerDTO> findAllByOrderByIdAsc();
-   List<AnswerDTO> findAnswerDTOByQuestionId(Long id);
+   List<AnswerDTO> findAnswerDTOByQuestionIdOrderById(Long id);
 
 }

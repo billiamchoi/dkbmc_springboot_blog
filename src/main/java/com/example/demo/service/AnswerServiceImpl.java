@@ -36,7 +36,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public List<AnswerDTO> listByQuestion(Long id) {
 
-        List<AnswerDTO> AnswerList = repository.findAnswerDTOByQuestionId(id);
+        List<AnswerDTO> AnswerList = repository.findAnswerDTOByQuestionIdOrderById(id);
         return AnswerList;
     }
 
