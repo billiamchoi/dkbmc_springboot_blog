@@ -50,7 +50,7 @@
                     <li class="page-item" th:classappend="${1 == questionDtoList.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" th:href="@{/question/list(page=${questionDtoList.pageable.pageNumber}, searchKeyword=${param.searchKeyword})}" tabindex="-1" aria-disabled="true">이전</a>
                     </li>
-                    <li class="page-item" th:classappend="${questionDtoList.pageable.pageNumber == questionDtoList.pageable.pageNumber + 1} ? 'disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                    <li class="page-item" th:classappend="${page == questionDtoList.pageable.pageNumber + 1 } ? 'active'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
                         <a class="page-link" th:href="@{/question/list(page=${page}, searchKeyword=${param.searchKeyword})}" th:text="${page}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${ endPage == questionDtoList.pageable.pageNumber + 1 } ? 'disabled'">
