@@ -30,7 +30,7 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable) {
 
-		Page<Question> questionSearchList = repository.findBySubjectContainingOrContentContaining(searchKeyword, searchKeyword, pageable);
+		Page<Question> questionSearchList = repository.findBySubjectContainingOrContentContainingOrderById(searchKeyword, searchKeyword, pageable);
 
 		Page<QuestionDTO> questionDtoSearchList = new  PageDTO().toDtoList(questionSearchList);
 		return questionDtoSearchList;

@@ -12,5 +12,5 @@ import com.example.demo.domain.question.QuestionDTO;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findAllByOrderByIdAsc(Pageable pageable);
 
-    Page<Question> findBySubjectContainingOrContentContaining(String subject, String content, Pageable pageable);
+    Page<Question> findBySubjectContainingOrContentContainingOrderById(String subject, String content, Pageable pageable);
 }
