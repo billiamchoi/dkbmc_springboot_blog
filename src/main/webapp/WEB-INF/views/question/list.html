@@ -31,14 +31,14 @@
             </thead>
             <tbody>
             <tr th:each="question : ${questionList}">
-                <td th:text="${question.id}">Id</th>
-                <td>
+                <td width="5%" th:text="${question.id}">Id</th>
+                <td width="40%">
                     <a  th:href="${'/question/detail/' + {question.id}}" th:text="${question.subject}">
                         Subject
                     </a>
                 </td>
-                <td th:text="${question.create_date}">Create_date</td>
-                <td th:text="${question.modify_date}">Modify_date</td>
+                <td width="15%" th:text="${#dates.format(question.create_date, 'yyyy년 MM월 dd일')}">Create_date</td>
+                <td width="15%" th:text="${#dates.format(question.modify_date, 'yyyy년 MM월 dd일')}">Create_date</td>
             </tr>
             </tbody>
         </table>

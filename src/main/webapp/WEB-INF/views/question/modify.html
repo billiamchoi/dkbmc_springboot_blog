@@ -23,14 +23,12 @@
       <textarea name="content" th:text="${question.content}" class="form-control" rows="3" ></textarea>
     </div>
     <div class="mt-4 form-group">
-      <label class="mb-2">생성 일자</label>
-      <input type="text" th:value="${question.create_date}"  class="form-control" readonly="true">
+      <input type="text" th:value="${question.create_date}"  class="form-control" readonly="true" hidden>
     </div>
     <div class="mt-4 form-group">
-      <label class="mb-2">수정 일자</label>
-      <input type="text" th:value="${question.modify_date}" class="form-control" readonly="true">
+      <input type="text" th:value="${question.modify_date}" class="form-control" readonly="true" hidden>
     </div>
-    <button type="submit" class="mt-4 btn btn-primary mb-2">수정하기</button>
+    <button type="submit" class="mt-2 btn btn-primary mb-2">수정하기</button>
   </form>
 </div>
 </body>
