@@ -9,6 +9,7 @@
         <h3>질문 등록</h3>
         <hr>
         <form role="form" action="/question/create" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="mt-4 form-group">
                 <label class="mb-2">제목</label>
                 <input type="text" name="subject" class="form-control">
@@ -17,6 +18,7 @@
                 <label class="mb-2">내용</label>
                 <textarea name="content" class="form-control" rows="3"></textarea>
             </div>
+
             <button type="submit" class="mt-4 btn btn-primary mb-2">저장하기</button>
         </form>
     </div>

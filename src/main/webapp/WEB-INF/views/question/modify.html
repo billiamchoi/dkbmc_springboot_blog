@@ -10,6 +10,7 @@
   <h3 th:text="${{question.id}+'번 질문 수정'}">#번 질문</h3>
   <hr>
   <form role="form" action="/question/modify" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <div class="mt-4 form-group">
       <input type="hidden" th:value="${question.id}" name="id" class="form-control" readonly="readonly" >
     </div>

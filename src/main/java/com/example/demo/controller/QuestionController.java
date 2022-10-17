@@ -4,10 +4,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.example.demo.domain.PageDTO;
-import com.example.demo.domain.question.Question;
 import com.example.demo.service.AnswerService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +18,6 @@ import com.example.demo.service.QuestionService;
 
 @Controller
 @RequestMapping("/question")
-@Slf4j
 public class QuestionController {
 
     @Autowired

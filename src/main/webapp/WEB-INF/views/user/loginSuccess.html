@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="includes/header.html :: head">
+</head>
+<body>
+<!-- Navigation-->
+<div th:insert="includes/navbar.html  :: nav">  </div>
+<div class="container">
+  <h3>로그인 성공</h3>
+  <hr>
+  <p>
+    <span sec:authentication="name"></span>님 환영합니다~
+  </p>
+  <a th:href="@{'/'}">메인으로 이동</a>
+</div>
+</body>
+<script>
+</script>
+</html>
