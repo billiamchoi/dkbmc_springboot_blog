@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.AnswerDTO;
-import com.example.demo.domain.QuestionDTO;
+import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.service.AnswerService;
-import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

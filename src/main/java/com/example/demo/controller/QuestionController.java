@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.demo.domain.PageDTO;
+import com.example.demo.domain.question.Question;
 import com.example.demo.service.AnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.domain.QuestionDTO;
+import com.example.demo.domain.question.QuestionDTO;
 import com.example.demo.service.QuestionService;
 
 @Controller
@@ -47,16 +47,14 @@ public class QuestionController {
 
         model.addAttribute("pageTitle", "질문 목록");
 
-        Page<QuestionDTO> inputPageableQ = null;
+        Page<QuestionDTO> questionDtoList = null;
 
         if(searchKeyword == null) {
-            inputPageableQ = questionService.list(pageable);
+            questionDtoList = questionService.list(pageable);
         } else {
-            inputPageableQ = questionService.searchList(searchKeyword, pageable);
+            questionDtoList = questionService.searchList(searchKeyword, pageable);
         }
 
-        //output of PageDTO.toDtoList
-        Page<QuestionDTO> questionDtoList = new PageDTO().toDtoList(inputPageableQ);
         int startPage = Math.max(1, questionDtoList.getPageable().getPageNumber() - 10);
 
         // 검색결과가 없을때 getTotalPages가 0이 나옴 -> 이를 항상 endPage 변수는 1로 고정

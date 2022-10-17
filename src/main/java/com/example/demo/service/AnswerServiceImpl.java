@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.AnswerDTO;
-import com.example.demo.domain.QuestionDTO;
+import com.example.demo.domain.answer.Answer;
+import com.example.demo.domain.answer.AnswerDTO;
+import com.example.demo.domain.question.Question;
+import com.example.demo.domain.question.QuestionDTO;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +25,37 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     @Override
-    public void create(AnswerDTO answer, Long id) {
+    public void create(AnswerDTO answerDto, Long id) {
 
-        QuestionDTO question = questionRepository.findById(id).get();
+        Question question = questionRepository.findById(id).get();
 
-        answer.setQuestion(question);
-        answer.setCreate_date(new Date());
-        answer.setModify_date(new Date());
+        answerDto.setQuestion(question);
+        answerDto.setCreate_date(new Date());
+        answerDto.setModify_date(new Date());
+        Answer answer = answerDto.toEntity();
         this.repository.save(answer);
     }
 
     @Override
     public List<AnswerDTO> listByQuestion(Long id) {
 
-        List<AnswerDTO> AnswerList = repository.findAnswerDTOByQuestionIdOrderById(id);
-        return AnswerList;
+        List<Answer> answerList = repository.findAnswerByQuestionIdOrderById(id);
+        List<AnswerDTO> answerDtoList = new AnswerDTO().toDtoList(answerList);
+        return answerDtoList;
     }
 
     @Override
-    public void modify(AnswerDTO answer, Long id) {
+    public void modify(AnswerDTO answerDto, Long id) {
 
-        QuestionDTO question = questionRepository.findById(id).get();
+        Answer answer = new Answer();
+        Question question = questionRepository.findById(id).get();
+        Optional<Answer> aa = repository.findById(answerDto.getId());
 
-        Optional<AnswerDTO> aa = repository.findById(answer.getId());
         Date create_date = aa.get().getCreate_date();
-        answer.setQuestion(question);
-        answer.setCreate_date(create_date);
-        answer.setModify_date(new Date());
+        answerDto.setQuestion(question);
+        answerDto.setCreate_date(create_date);
+        answerDto.setModify_date(new Date());
+        answer = answerDto.toEntity();
         this.repository.save(answer);
     }
 

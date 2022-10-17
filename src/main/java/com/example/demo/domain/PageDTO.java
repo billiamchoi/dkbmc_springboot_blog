@@ -1,11 +1,13 @@
 package com.example.demo.domain;
+import com.example.demo.domain.question.Question;
+import com.example.demo.domain.question.QuestionDTO;
 import org.springframework.data.domain.Page;
 
 public class PageDTO {
 
     /* Page<Entity> -> Page<Dto> 변환처리 */
-    public Page<QuestionDTO> toDtoList(Page<QuestionDTO> boardList){
-        Page<QuestionDTO> questionDtoList = boardList.map(m -> QuestionDTO.builder()
+    public Page<QuestionDTO> toDtoList(Page<Question> questionList) {
+        Page<QuestionDTO> questionDtoList = questionList.map(m -> QuestionDTO.builder()
                 .id(m.getId())
                 .content(m.getContent())
                 .subject(m.getSubject())
@@ -13,6 +15,8 @@ public class PageDTO {
                 .modify_date(m.getModify_date())
                 .answer(m.getAnswer())
                 .build());
+
         return questionDtoList;
     }
 }
+

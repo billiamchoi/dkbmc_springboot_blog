@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.Optional;
 
 
+import com.example.demo.domain.PageDTO;
+import com.example.demo.domain.question.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.QuestionDTO;
+import com.example.demo.domain.question.QuestionDTO;
 import com.example.demo.repository.QuestionRepository;
 
 @Service
@@ -20,34 +22,37 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public Page<QuestionDTO> list(Pageable pageable) {
-		
-		Page<QuestionDTO> QuestionList = repository.findAllByOrderByIdAsc(pageable);
-		return QuestionList;
+		Page<Question> questionList = repository.findAllByOrderByIdAsc(pageable);
+		Page<QuestionDTO> questionDtoList = new  PageDTO().toDtoList(questionList);
+		return questionDtoList;
 	}
-
 
 	@Override
 	public Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable) {
 
-		Page<QuestionDTO> QuestionSearchList = repository.findBySubjectContainingOrContentContaining(searchKeyword, searchKeyword, pageable);
-		return QuestionSearchList;
+		Page<Question> questionSearchList = repository.findBySubjectContainingOrContentContaining(searchKeyword, searchKeyword, pageable);
 
+		Page<QuestionDTO> questionDtoSearchList = new  PageDTO().toDtoList(questionSearchList);
+		return questionDtoSearchList;
 	}
 
 	@Override
-	public void create(QuestionDTO question) {
+	public void create(QuestionDTO questionDto) {
 
-		question.setCreate_date(new Date());
-		question.setModify_date(new Date());
+		questionDto.setCreate_date(new Date());
+		questionDto.setModify_date(new Date());
+		Question question = questionDto.toEntity();
 		this.repository.save(question);
 	}
 
 	@Override
-	public void modify(QuestionDTO question) {
-		Optional<QuestionDTO> qq = repository.findById(question.getId());
-		Date creted_date = qq.get().getCreate_date();
-		question.setCreate_date(creted_date);
-		question.setModify_date(new Date());
+	public void modify(QuestionDTO questionDto) {
+		Question question = new Question();
+		Optional<Question> qq = repository.findById(questionDto.getId());
+		Date created_date = qq.get().getCreate_date();
+		questionDto.setCreate_date(created_date);
+		questionDto.setModify_date(new Date());
+		question = questionDto.toEntity();
 		this.repository.save(question);
 	}
 
@@ -58,10 +63,11 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public QuestionDTO get(Long id) {
-		QuestionDTO q = new QuestionDTO();
-		Optional<QuestionDTO> qq = repository.findById(id);
-		q = qq.get();
-		return q;
+		QuestionDTO questionDto = new QuestionDTO();
+		Optional <Question> qq = repository.findById(id);
+		Question question = qq.get();
+		questionDto = question.toDto();
+		return questionDto;
 	}
 
 }
