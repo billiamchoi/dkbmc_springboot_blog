@@ -11326,13 +11326,13 @@ html {
 
 #textarea-container button#modify {
   position: absolute;
-  top: 6.5rem;
+  top: 5.8rem;
 }
 
 #textarea-container button#delete {
   position: absolute;
-  top: 6.5rem;
-  left: 3.5rem;
+  top: 5.8rem;
+  left: 4rem;
 /*  top: 6rem;*/
 /*  right: 27rem;*/
 }
