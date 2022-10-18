@@ -65,7 +65,7 @@
             var input = $(`input[answerId=${answerId}]`).clone();
             var textarea = $(`textarea[answerId=${answerId}]`).clone();
             var csrf = $('input#csrf').clone();
-            
+
             if(operation === 'delete'){
                 formObj.attr("action", `/answer/remove/${answerId}`).attr("method", "post");
                 formObj.append(input);
