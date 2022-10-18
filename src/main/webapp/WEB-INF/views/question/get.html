@@ -28,7 +28,7 @@
 
     <div id="textarea-container" th:each="answer : ${answerList}">
         <form class="answer-form" role="form" action="/hi" th:answerId="${answer.id}">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="mt-4 form-group">
                 <input type="number" hidden th:value="${answer.id}" name="id" class="form-control" readonly="true" th:answerId="${answer.id}">
             </div>
@@ -36,8 +36,8 @@
                 <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true" th:answerId="${answer.id}">
             </div>
             <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"></textarea>
-            <button type="submit" id="modify" data-oper="modify" th:answerId="${answer.id}">수정</button>
-            <button type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}">삭제</button>
+            <button class="btn btn-outline-secondary" type="submit"  id="modify" data-oper="modify" th:answerId="${answer.id}">수정</button>
+            <button class="btn btn-outline-secondary" type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}">삭제</button>
         </form>
     </div>
 
@@ -59,19 +59,13 @@
         $('button#modify, button#delete').on("click", function(e){
 
             e.preventDefault();
-            var answerId = $(this).attr("answerId")
-            var formObj = $(`form[answerId=${answerId}]`)
+            var answerId = $(this).attr("answerId");
+            var formObj = $(`form[answerId=${answerId}]`);
             var operation = $(this).data("oper");
-            var input = $(`input[answerId=${answerId}]`).clone()
-            var textarea = $(`textarea[answerId=${answerId}]`).clone()
-            console.log("디버깅", input);
-
-
-            var textareaValue = $(`textarea[answerId=${answerId}]`).val();
-            console.log("필요 엔서 아이디",answerId);
-            console.log("필요 액션 종류",operation);
-            console.log("필요 컨텐츠", textareaValue);
-
+            var input = $(`input[answerId=${answerId}]`).clone();
+            var textarea = $(`textarea[answerId=${answerId}]`).clone();
+            var csrf = $('input#csrf').clone();
+            
             if(operation === 'delete'){
                 formObj.attr("action", `/answer/remove/${answerId}`).attr("method", "post");
                 formObj.append(input);
@@ -80,6 +74,7 @@
 
                 formObj.empty();
 
+                formObj.append(csrf);
                 formObj.append(input);
                 formObj.append(textarea);
             }
