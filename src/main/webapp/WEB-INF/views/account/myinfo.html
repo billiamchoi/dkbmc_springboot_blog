@@ -8,8 +8,11 @@
 <div class="container">
   <h3>회원 정보</h3>
   <hr>
+  <form role="form" action="/account/delete" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-<!--    <div th:replace="includes/formErrors.html :: formErrorsFragment"></div>-->
+    <div class="mt-4 form-group">
+      <input type="text" class="form-control" name="id" th:value="${id}" readonly="true">
+    </div>
     <div class="mt-4 form-group">
       <label for="username" class="mb-2 form-label">사용자ID</label>
       <input type="text" class="form-control" th:value="${username}" readonly="true">
@@ -18,10 +21,12 @@
       <label for="email" class="mb-2 form-label">이메일</label>
       <input type="email" class="form-control" th:value="${email}" readonly="true">
     </div>
+    <a class="mt-4 btn btn-primary mb-2" href="/account/modify">수정하기</a>
+    <button type="submit" class="mt-4 btn btn-danger mb-2">회원 탈퇴</button>
+  </form>
 
-  <a class="mt-4 btn btn-primary mb-2" href="/account/modify">
-    수정하기
-  </a>
+
+
 </div>
 </body>
 <script>

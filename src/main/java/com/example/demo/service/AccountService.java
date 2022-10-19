@@ -9,5 +9,5 @@ public interface AccountService {
 
     void modify(MemberModifyDTO memberModifyDTO);
 
-    void remove(String username);
+    void remove(Long id);
 }

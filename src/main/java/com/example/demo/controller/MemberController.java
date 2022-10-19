@@ -11,10 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -84,10 +81,12 @@ public class MemberController {
     public String myInfoView(Principal principal, ModelMap model) {
 
         MemberDTO member = accountService.get(principal.getName());
+        Long id = member.getId();
         String username = member.getUsername();
         String email = member.getEmail();
 
         model.addAttribute("pageTitle", "내 정보");
+        model.addAttribute("id", id);
         model.addAttribute("username", username);
         model.addAttribute("email", email);
 
@@ -136,10 +135,7 @@ public class MemberController {
             return "/account/modify";
         }
 
-
-
         if(!principal.getName().equals(memberDTO.getUsername())) {
-
             try{
                 memberService.joinUser(memberDTO);
             }catch (DataIntegrityViolationException e) {
@@ -158,5 +154,11 @@ public class MemberController {
         return "redirect:/account/info";
     }
 
+    @PostMapping("/delete")
+    public String memberRemove(@RequestParam ("id") Long id) {
+
+        accountService.remove(id);
+        return "redirect:/account/logout";
+    }
 }
 

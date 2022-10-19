@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void remove(String username) {
-
+    public void remove(Long id) {
+        repository.deleteById(id);
     }
 }
