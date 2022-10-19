@@ -58,8 +58,6 @@ public class QuestionController {
                                                             : Math.min(questionDtoList.getTotalPages(), questionDtoList.getPageable().getPageNumber() + 10);
         List<QuestionDTO> questionContentList =  questionDtoList.getContent();
 
-
-
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("questionDtoList", questionDtoList);

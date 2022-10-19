@@ -28,7 +28,7 @@ public class Answer {
     private Date create_date;
     private Date modify_date;
 
-    public AnswerDTO toDTO() {
+    public AnswerDTO toDto() {
         return AnswerDTO.builder()
                 .id(id)
                 .content(content)
