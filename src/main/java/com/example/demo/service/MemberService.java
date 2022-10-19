@@ -26,13 +26,13 @@ public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
     @Transactional
-    public Long joinUser(MemberDTO userDto) {
+    public Long joinUser(MemberDTO memberDto) {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userDto.setPassword1(passwordEncoder.encode(userDto.getPassword1()));
-        userDto.setPassword2(passwordEncoder.encode(userDto.getPassword2()));
+        memberDto.setPassword1(passwordEncoder.encode(memberDto.getPassword1()));
+        memberDto.setPassword2(passwordEncoder.encode(memberDto.getPassword2()));
 
-        return memberRepository.save(userDto.toEntity()).getId();
+        return memberRepository.save(memberDto.toEntity()).getId();
     }
 
     @Override

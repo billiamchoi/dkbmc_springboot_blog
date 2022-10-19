@@ -1,7 +1,7 @@
 spring:
   security:
     user:
-      name: wooyoung
+      name: admin
       password: 1234
   thymeleaf:
     cache: 'false'
@@ -10,7 +10,7 @@ spring:
   data:
     web:
       pageable:
-        default-page-size: 10
+        default-page-size: 5
         one-indexed-parameters: true
   jpa:
     properties:

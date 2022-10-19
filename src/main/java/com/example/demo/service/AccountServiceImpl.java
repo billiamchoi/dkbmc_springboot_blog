@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.domain.member.MemberModifyDTO;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +15,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Autowired
     private MemberRepository repository;
+
 
     @Override
     public MemberDTO get(String username) {
@@ -25,12 +28,16 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void modify(MemberDTO member) {
+    public void modify(MemberModifyDTO memberModifyDTO) {
 
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberModifyDTO.setPassword2(passwordEncoder.encode(memberModifyDTO.getPassword2()));
+
+        this.repository.updateMember( memberModifyDTO.getPassword2(), memberModifyDTO.getEmail(), memberModifyDTO.getId());
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(String username) {
 
     }
 }

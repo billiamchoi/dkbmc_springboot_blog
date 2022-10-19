@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.domain.member.MemberModifyDTO;
 
 public interface AccountService {
 
     MemberDTO get(String username);
 
-    void modify(MemberDTO member);
+    void modify(MemberModifyDTO memberModifyDTO);
 
-    void remove(Long id);
+    void remove(String username);
 }
