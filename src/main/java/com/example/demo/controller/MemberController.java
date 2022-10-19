@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/account")
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value="/login")
     public String loginView(ModelMap model) {
@@ -71,6 +76,22 @@ public class MemberController {
         }
 
         return "redirect:/account/login";
+    }
+
+    @GetMapping("/info")
+    public String myInfoView(Principal principal, ModelMap model) {
+
+        model.addAttribute("pageTitle", "내 정보");
+
+        MemberDTO member = accountService.get(principal.getName());
+
+        String username = member.getUsername();
+        String email = member.getEmail();
+
+        model.addAttribute("username", username);
+        model.addAttribute("email", email);
+
+        return "/account/myinfo";
     }
 }
 

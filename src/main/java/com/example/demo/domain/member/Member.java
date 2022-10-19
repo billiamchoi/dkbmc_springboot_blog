@@ -32,4 +32,13 @@ public class Member {
         this.email = email;
         this.password = password;
     }
+
+    public MemberDTO toDtO() {
+        return MemberDTO.builder()
+                .id(id)
+                .username(username)
+                .email(email)
+                .password(password)
+                .build();
+    }
 }

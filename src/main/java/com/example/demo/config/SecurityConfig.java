@@ -33,7 +33,10 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/**").permitAll()
+                .authorizeRequests()
+                // 페이지 별 권한 설정
+                .antMatchers("/account/myinfo").hasRole("MEMBER")
+                .antMatchers("/**").permitAll()
                 .and()
                 .headers()
                 .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
