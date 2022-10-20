@@ -19,8 +19,10 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="mt-4 btn btn-primary mb-2" th:onclick="|location.href='@{/question/modify/{questionId}(questionId=${question.id})}'|" >수정하기</button>
-        <button type="submit" class="mt-4 btn btn-danger mb-2">삭제하기</button>
+        <div sec:authorize="isAuthenticated()">
+            <button type="button" class="mt-4 btn btn-primary mb-2" th:onclick="|location.href='@{/question/modify/{questionId}(questionId=${question.id})}'|" th:hidden="${username == question.member.username} ? null : 'true'">수정하기</button>
+            <button type="submit" class="mt-4 btn btn-danger mb-2" th:hidden="${username == question.member.username} ? null : 'true'">삭제하기</button>
+        </div>
     </form>
 
     <h4 class="mt-3" th:text="${#lists.size(answerList)}+'개의 답변이 있습니다.'"></h4>
@@ -36,14 +38,16 @@
             <div class="mt-4 form-group">
                 <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true" th:answerId="${answer.id}">
             </div>
-            <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"></textarea>
+            <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"  th:readonly="${username == answer.member.username} ? null : 'true'"></textarea>
             <div class="d-flex justify-content-end author-name-container">
                 <div class="badge bg-light text-dark mb-5 m-1 ">
                     <span th:text="${answer.member.username}"></span>
                 </div>
             </div>
-            <button class="btn btn-outline-secondary" type="submit"  id="modify" data-oper="modify" th:answerId="${answer.id}">수정</button>
-            <button class="btn btn-outline-secondary" type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}">삭제</button>
+            <div sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-secondary" type="submit"  id="modify" data-oper="modify" th:answerId="${answer.id}" th:hidden="${username == answer.member.username} ? null : 'true'">수정</button>
+                <button class="btn btn-outline-secondary" type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}" th:hidden="${username == answer.member.username} ? null : 'true'">삭제</button>
+            </div>
         </form>
     </div>
 
@@ -51,12 +55,18 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <input type="text"  name= "author_id" th:value="${author_id}" hidden>
         <div class="mt-4 form-group">
-            <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true">
+            <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control">
         </div>
         <div class="mt-4 form-group">
-            <textarea name="content"  class="mt-3 form-control" rows="5" placeholder="답변을 입력해주세요"></textarea>
+            <textarea name="content"  class="mt-3 form-control" rows="5" placeholder="답변을 입력해주세요" ></textarea>
         </div>
-        <button type="submit" class="mt-4 btn btn-primary mb-2">답변 등록</button>
+        <div sec:authorize="isAuthenticated()">
+            <button type="submit" class="mt-4 btn btn-primary mb-2">답변 등록</button>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a type="button" class="mt-4 btn btn-primary mb-2" href="/account/login">답변 등록</a>
+        </div>
+
     </form>
 </div>
 </body>

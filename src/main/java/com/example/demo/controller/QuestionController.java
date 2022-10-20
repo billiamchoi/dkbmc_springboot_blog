@@ -83,12 +83,15 @@ public class QuestionController {
 
         // 로그인 안됬을때는 author_id를 null로 지정
         Long author_id = null;
+        String user_name = null;
 
         if (principal != null) {
             MemberDTO member = accountService.get(principal.getName());
+            user_name = principal.getName();
             author_id = member.getId();
         }
 
+        model.addAttribute("username", user_name);
         model.addAttribute("author_id", author_id);
         model.addAttribute("pageTitle", "질문과 답변");
         model.addAttribute("question", questionService.get(id));

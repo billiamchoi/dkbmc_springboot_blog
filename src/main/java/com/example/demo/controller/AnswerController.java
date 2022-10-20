@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/answer")
 public class AnswerController {
@@ -17,7 +19,7 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/create")
-    public String answerCreate(AnswerDTO answer, @RequestParam ("question_id") Long questionId, @RequestParam ("author_id") Long authorId) {
+    public String answerCreate(Principal principal, AnswerDTO answer, @RequestParam ("question_id") Long questionId, @RequestParam ("author_id") Long authorId) {
 
         answerService.create(answer, questionId, authorId);
         return "redirect:/question/detail/"+questionId;
