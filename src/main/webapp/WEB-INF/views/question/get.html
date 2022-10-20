@@ -30,6 +30,7 @@
     <div class="textarea-container" th:each="answer : ${answerList}">
         <form class="answer-form" role="form" action="/hi" th:answerId="${answer.id}">
             <input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input id="" type="text"  name= "author_id" th:value="${answer.member.id}" th:answerId="${answer.id}" hidden>
             <div class="mt-4 form-group">
                 <input type="number" hidden th:value="${answer.id}" name="id" class="form-control" readonly="true" th:answerId="${answer.id}">
             </div>
@@ -69,18 +70,25 @@
             var answerId = $(this).attr("answerId");
             var formObj = $(`form[answerId=${answerId}]`);
             var operation = $(this).data("oper");
-            var input = $(`input[answerId=${answerId}]`).clone();
+            var inputAnswerId = $(`input[answerId=${answerId}][name="id"]`).clone();
+            var inputQuestionId = $(`input[answerId=${answerId}][name="question_id"]`).clone();
+            var inputAuthorId = $(`input[answerId=${answerId}][name="author_id"]`).clone();
             var textarea = $(`textarea[answerId=${answerId}]`).clone();
             var csrf = $('input#csrf').clone();
 
+
             if(operation === 'delete'){
                 formObj.attr("action", `/answer/remove/${answerId}`).attr("method", "post");
-                formObj.append(input);
+                formObj.append(inputAnswerId);
+                formObj.append(inputAuthorId);
+                formObj.append(inputQuestionId);
             }else if(operation ==='modify'){
                 formObj.attr("action", "/answer/modify").attr("method", "post");
                 formObj.empty();
                 formObj.append(csrf);
-                formObj.append(input);
+                formObj.append(inputAnswerId);
+                formObj.append(inputAuthorId);
+                formObj.append(inputQuestionId);
                 formObj.append(textarea);
             }
             formObj.submit();

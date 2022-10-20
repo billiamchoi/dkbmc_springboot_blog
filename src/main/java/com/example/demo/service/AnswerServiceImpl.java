@@ -52,14 +52,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void modify(AnswerDTO answerDto, Long id) {
+    public void modify(AnswerDTO answerDto, Long questionId, Long authorId) {
 
         Answer answer = new Answer();
-        Question question = questionRepository.findById(id).get();
+        Question question = questionRepository.findById(questionId).get();
         Optional<Answer> aa = answerRepository.findById(answerDto.getId());
+        Member member = memberRepository.findById(authorId).get();
 
         Date create_date = aa.get().getCreate_date();
         answerDto.setQuestion(question);
+        answerDto.setMember(member);
         answerDto.setCreate_date(create_date);
         answerDto.setModify_date(new Date());
         answer = answerDto.toEntity();

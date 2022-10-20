@@ -24,10 +24,10 @@ public class AnswerController {
     }
 
     @PostMapping("/modify")
-    public String answerModify(AnswerDTO answer, @RequestParam ("question_id") Long id) {
+    public String answerModify(AnswerDTO answer, @RequestParam ("question_id") Long questionId, @RequestParam ("author_id") Long authorId) {
 
-        answerService.modify(answer, id);
-        return "redirect:/question/detail/"+id;
+        answerService.modify(answer, questionId, authorId);
+        return "redirect:/question/detail/"+questionId;
     }
 
     @PostMapping("/remove/{id}")

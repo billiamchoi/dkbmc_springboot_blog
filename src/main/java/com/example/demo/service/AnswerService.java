@@ -10,7 +10,7 @@ public interface AnswerService {
 
     List<AnswerDTO> listByQuestion(Long id);
 
-    void modify(AnswerDTO answer, Long id);
+    void modify(AnswerDTO answer, Long id, Long authorId);
 
     void remove(Long id);
 
