@@ -39,7 +39,7 @@
             <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"></textarea>
             <div class="d-flex justify-content-end">
                 <div class="mb-2">
-                    <span>practice</span>
+                    <span th:text="${answer.member.username}"></span>
                 </div>
             </div>
             <button class="btn btn-outline-secondary" type="submit"  id="modify" data-oper="modify" th:answerId="${answer.id}">수정</button>

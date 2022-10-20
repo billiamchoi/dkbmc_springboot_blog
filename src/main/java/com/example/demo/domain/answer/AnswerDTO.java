@@ -1,5 +1,6 @@
 package com.example.demo.domain.answer;
 
+import com.example.demo.domain.member.Member;
 import com.example.demo.domain.question.Question;
 import com.example.demo.domain.question.QuestionDTO;
 import lombok.*;
@@ -21,6 +22,8 @@ public class AnswerDTO {
 
     private String content;
     private Question question;
+
+    private Member member;
     private Date create_date;
     private Date modify_date;
 
@@ -31,6 +34,7 @@ public class AnswerDTO {
                 .create_date(create_date)
                 .modify_date(modify_date)
                 .question(question)
+                .member(member)
                 .build();
     }
 
@@ -41,6 +45,7 @@ public class AnswerDTO {
                 .create_date(m.getCreate_date())
                 .modify_date(m.getModify_date())
                 .question(m.getQuestion())
+                .member(m.getMember())
                 .build())
                 .toList();
 
