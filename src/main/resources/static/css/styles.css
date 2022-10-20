@@ -11350,7 +11350,6 @@ html {
   left: 42rem;
 }
 
-.d-flex justify-content-end author-name-container {
-  margin-top: -5rem
+div.d-flex.justify-content-end.author-name-container {
+  margin-top: -5rem !important;
 }
-

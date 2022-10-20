@@ -35,6 +35,8 @@ public class QuestionController {
     @GetMapping("/create")
     public String questionCreateView(Principal principal, ModelMap model) {
 
+        if (principal == null) return "redirect:/account/login";
+
         MemberDTO member = accountService.get(principal.getName());
         Long author_id = member.getId();
         model.addAttribute("author_id", author_id);
@@ -96,6 +98,8 @@ public class QuestionController {
 
     @GetMapping("/modify/{id}")
     public String questionModifyView(Principal principal, @PathVariable Long id, Model model) {
+
+        if (principal == null) return "redirect:/account/login";
 
         model.addAttribute("pageTitle", "질문 수정");
         MemberDTO member = accountService.get(principal.getName());
