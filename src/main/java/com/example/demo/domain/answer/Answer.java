@@ -32,6 +32,7 @@ public class Answer {
     private Member member;
 
     private Date create_date;
+
     private Date modify_date;
 
     public AnswerDTO toDto() {

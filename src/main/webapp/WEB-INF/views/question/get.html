@@ -49,6 +49,7 @@
 
     <form role="form" action="/answer/create" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="text"  name= "author_id" th:value="${author_id}" hidden>
         <div class="mt-4 form-group">
             <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true">
         </div>

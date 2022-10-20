@@ -77,7 +77,17 @@ public class QuestionController {
     }
 
     @GetMapping("/detail/{id}")
-    public String questionDetailView(@PathVariable Long id, Model model) {
+    public String questionDetailView(Principal principal, @PathVariable Long id, Model model) {
+
+        // 로그인 안됬을때는 author_id를 null로 지정
+        Long author_id = null;
+
+        if (principal != null) {
+            MemberDTO member = accountService.get(principal.getName());
+            author_id = member.getId();
+        }
+
+        model.addAttribute("author_id", author_id);
         model.addAttribute("pageTitle", "질문과 답변");
         model.addAttribute("question", questionService.get(id));
         model.addAttribute("answerList", answerService.listByQuestion(id));

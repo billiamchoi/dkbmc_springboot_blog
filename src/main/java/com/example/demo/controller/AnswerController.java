@@ -17,10 +17,10 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/create")
-    public String answerCreate(AnswerDTO answer, @RequestParam ("question_id") Long id) {
+    public String answerCreate(AnswerDTO answer, @RequestParam ("question_id") Long questionId, @RequestParam ("author_id") Long authorId) {
 
-        answerService.create(answer, id);
-        return "redirect:/question/detail/"+id;
+        answerService.create(answer, questionId, authorId);
+        return "redirect:/question/detail/"+questionId;
     }
 
     @PostMapping("/modify")

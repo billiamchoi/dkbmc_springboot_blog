@@ -46,7 +46,6 @@ public class QuestionServiceImpl implements QuestionService{
 	public void create(QuestionDTO questionDto, Long authorId) {
 
 		Member member = memberRepository.findById(authorId).get();
-
 		questionDto.setMember(member);
 		questionDto.setCreate_date(new Date());
 		questionDto.setModify_date(new Date());
