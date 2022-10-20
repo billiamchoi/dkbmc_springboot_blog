@@ -32,13 +32,6 @@ public class QuestionController {
     @Autowired
     private AnswerService answerService;
 
-    @PostMapping("/create")
-    public String questionCreate(QuestionDTO question, @RequestParam("author_id") Long authorId) {
-
-        questionService.create(question, authorId);
-        return "redirect:/question/list";
-    }
-
     @GetMapping("/create")
     public String questionCreateView(Principal principal, ModelMap model) {
 
@@ -47,6 +40,13 @@ public class QuestionController {
         model.addAttribute("author_id", author_id);
         model.addAttribute("pageTitle", "질문 등록");
         return "/question/create";
+    }
+
+    @PostMapping("/create")
+    public String questionCreate(QuestionDTO question, @RequestParam("author_id") Long authorId) {
+
+        questionService.create(question, authorId);
+        return "redirect:/question/list";
     }
 
     @GetMapping("/list")
@@ -85,16 +85,20 @@ public class QuestionController {
     }
 
     @GetMapping("/modify/{id}")
-    public String questionModifyView(@PathVariable Long id, Model model) {
+    public String questionModifyView(Principal principal, @PathVariable Long id, Model model) {
+
         model.addAttribute("pageTitle", "질문 수정");
+        MemberDTO member = accountService.get(principal.getName());
+        Long author_id = member.getId();
+        model.addAttribute("author_id", author_id);
         model.addAttribute("question", questionService.get(id));
         return "/question/modify";
     }
 
     @PostMapping("/modify")
-    public String questionModify(QuestionDTO question) {
+    public String questionModify(QuestionDTO question, @RequestParam("author_id") Long authorId) {
 
-        questionService.modify(question);
+        questionService.modify(question, authorId);
         return "redirect:/question/list";
     }
 

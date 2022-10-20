@@ -17,7 +17,7 @@ public interface QuestionService {
 
 	Page<QuestionDTO> list(Pageable page);
 
-	void modify(QuestionDTO question);
+	void modify(QuestionDTO question, Long authorId);
 
 	void remove(Long id);
 

@@ -55,11 +55,14 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public void modify(QuestionDTO questionDto) {
+	public void modify(QuestionDTO questionDto, Long authorId) {
 
 		Question question = new Question();
+		Member member = memberRepository.findById(authorId).get();
+
 		Optional<Question> qq = questionRepository.findById(questionDto.getId());
 		Date created_date = qq.get().getCreate_date();
+		questionDto.setMember(member);
 		questionDto.setCreate_date(created_date);
 		questionDto.setModify_date(new Date());
 		question = questionDto.toEntity();
