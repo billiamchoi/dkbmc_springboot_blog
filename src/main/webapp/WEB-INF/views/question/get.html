@@ -12,11 +12,10 @@
     <form role="form" th:action="${'/question/remove/' + {question.id}}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="mt-4 form-group" id="textarea-container2">
-            <textarea name="content" th:text="${question.content}" class="form-control" rows="7" readonly="true"></textarea>
-            <div class="d-flex justify-content-end">
-
-                <div class="mb-2">
-                    <a th:text="${question.member.username}"></a>
+            <textarea name="content" th:text="${question.content}" class="form-control" rows="6" readonly="true"></textarea>
+            <div class="d-flex justify-content-end author-name-container">
+                <div class="badge bg-light text-dark mb-5 m-1 ">
+                    <span th:text="${question.member.username}"></span>
                 </div>
             </div>
         </div>
@@ -38,8 +37,8 @@
                 <input type="number" hidden th:value="${question.id}" name="question_id" class="form-control" readonly="true" th:answerId="${answer.id}">
             </div>
             <textarea name="content" th:text="${answer.content}" class="mt-3 form-control" rows="5" th:answerId="${answer.id}"></textarea>
-            <div class="d-flex justify-content-end">
-                <div class="mb-2">
+            <div class="d-flex justify-content-end author-name-container">
+                <div class="badge bg-light text-dark mb-5 m-1 ">
                     <span th:text="${answer.member.username}"></span>
                 </div>
             </div>
