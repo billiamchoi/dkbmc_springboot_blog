@@ -1,5 +1,6 @@
 package com.example.demo.domain.answer;
 
+import com.example.demo.domain.member.Member;
 import com.example.demo.domain.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,11 @@ public class Answer {
     @ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY)
     @JoinColumn(name="question_id")
     private Question question;
+
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="author_id")
+    private Member member;
+
     private Date create_date;
     private Date modify_date;
 

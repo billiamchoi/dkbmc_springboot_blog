@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import com.example.demo.domain.answer.Answer;
+import com.example.demo.domain.member.Member;
 import lombok.*;
 
 @Getter
@@ -21,11 +22,13 @@ public class QuestionDTO {
 
     private String subject;
 
+    private Set<Answer> answer = Collections.emptySet();
+
+    private Member member;
+
     private Date create_date;
 
     private Date modify_date;
-
-    private Set<Answer> answer = Collections.emptySet();
 
     public Question toEntity() {
         return Question.builder()
@@ -35,6 +38,7 @@ public class QuestionDTO {
                 .create_date(create_date)
                 .modify_date(modify_date)
                 .answer(answer)
+                .member(member)
                 .build();
     }
 }

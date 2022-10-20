@@ -25,7 +25,7 @@
             <tr>
                 <th scope="col">번호</th>
                 <th scope="col">제목</th>
-                <th scope="col">작성일시</th>
+                <th scope="col">글쓴이</th>
                 <th scope="col">수정일시</th>
             </tr>
             </thead>
@@ -37,8 +37,8 @@
                         Subject
                     </a>
                 </td>
+                <td width="15%"  th:text="${question.member.username}">writer</td>
                 <td width="15%" th:text="${#dates.format(question.create_date, 'yyyy년 MM월 dd일')}">Create_date</td>
-                <td width="15%" th:text="${#dates.format(question.modify_date, 'yyyy년 MM월 dd일')}">Create_date</td>
             </tr>
             </tbody>
         </table>

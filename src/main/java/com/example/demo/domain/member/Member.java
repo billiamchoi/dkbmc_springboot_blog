@@ -1,11 +1,14 @@
 package com.example.demo.domain.member;
 
+import com.example.demo.domain.answer.Answer;
+import com.example.demo.domain.question.Question;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -24,6 +27,12 @@ public class Member {
 
     @Column(length = 100, nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true)
+    private Set<Question> question;
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true)
+    private Set<Answer> answer;
 
     @Builder
     public Member(Long id, String username, String email, String password) {

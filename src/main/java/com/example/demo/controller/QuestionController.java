@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,16 +27,24 @@ public class QuestionController {
     private QuestionService questionService;
 
     @Autowired
+    private AccountService accountService;
+
+    @Autowired
     private AnswerService answerService;
 
     @PostMapping("/create")
-    public String questionCreate(QuestionDTO question) {
-        questionService.create(question);
+    public String questionCreate(QuestionDTO question, @RequestParam("author_id") Long authorId) {
+
+        questionService.create(question, authorId);
         return "redirect:/question/list";
     }
 
     @GetMapping("/create")
-    public String questionCreateView(ModelMap model) {
+    public String questionCreateView(Principal principal, ModelMap model) {
+
+        MemberDTO member = accountService.get(principal.getName());
+        Long author_id = member.getId();
+        model.addAttribute("author_id", author_id);
         model.addAttribute("pageTitle", "질문 등록");
         return "/question/create";
     }

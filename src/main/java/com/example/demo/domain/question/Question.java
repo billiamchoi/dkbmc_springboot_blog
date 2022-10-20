@@ -1,6 +1,7 @@
 package com.example.demo.domain.question;
 
 import com.example.demo.domain.answer.Answer;
+import com.example.demo.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,10 @@ public class Question {
     private Date modify_date;
     @OneToMany(mappedBy = "question", orphanRemoval = true)
     private Set<Answer> answer;
+
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="author_id")
+    private Member member;
 
     public QuestionDTO toDto() {
         return QuestionDTO.builder()

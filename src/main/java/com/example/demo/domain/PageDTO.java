@@ -14,6 +14,7 @@ public class PageDTO {
                 .create_date(m.getCreate_date())
                 .modify_date(m.getModify_date())
                 .answer(m.getAnswer())
+                .member(m.getMember())
                 .build());
 
         return questionDtoList;
