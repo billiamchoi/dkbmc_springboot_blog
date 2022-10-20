@@ -11313,28 +11313,42 @@ html {
 	margin-bottom: 1rem;
 }
 
-#textarea-container {
+.textarea-container {
   position: relative;
 }
 
-#textarea-container textarea {
+.textarea-container textarea {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   resize: none;
 }
 
-#textarea-container button#modify {
+.textarea-container button#modify {
   position: absolute;
   top: 5.8rem;
 }
 
-#textarea-container button#delete {
+.textarea-container button#delete {
   position: absolute;
   top: 5.8rem;
   left: 4rem;
-/*  top: 6rem;*/
-/*  right: 27rem;*/
 }
+
+.d-flex justify-content-end {
+  position: relative;
+}
+
+.d-flex justify-content-end div {
+  position: absolute;
+  top: 100rem;
+}
+
+.d-flex justify-content-end span {
+  position: absolute;
+  top: 100rem;
+  left: 42rem;
+}
+
 
 

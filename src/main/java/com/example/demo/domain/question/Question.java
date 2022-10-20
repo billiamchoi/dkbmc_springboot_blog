@@ -42,6 +42,7 @@ public class Question {
                 .create_date(create_date)
                 .modify_date(modify_date)
                 .answer(answer)
+                .member(member)
                 .build();
     }
 }
