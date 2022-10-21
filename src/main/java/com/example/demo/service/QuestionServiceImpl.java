@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.example.demo.domain.PageDTO;
 import com.example.demo.domain.member.Member;
+import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.question.Question;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,13 @@ public class QuestionServiceImpl implements QuestionService{
 		Question question = qq.get();
 		questionDto = question.toDto();
 		return questionDto;
+	}
+
+	@Override
+	public void vote(QuestionDTO questionDto, MemberDTO memberDto) {
+
+		questionDto.getVoter().add(memberDto.toEntity());
+		this.questionRepository.save(questionDto.toEntity());
 	}
 
 }

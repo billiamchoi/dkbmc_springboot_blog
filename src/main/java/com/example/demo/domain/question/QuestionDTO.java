@@ -26,6 +26,8 @@ public class QuestionDTO {
 
     private Member member;
 
+    private Set<Member> voter;
+
     private Date create_date;
 
     private Date modify_date;
@@ -39,6 +41,7 @@ public class QuestionDTO {
                 .modify_date(modify_date)
                 .answer(answer)
                 .member(member)
+                .voter(voter)
                 .build();
     }
 }

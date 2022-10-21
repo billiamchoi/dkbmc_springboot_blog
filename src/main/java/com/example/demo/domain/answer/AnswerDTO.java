@@ -6,8 +6,10 @@ import com.example.demo.domain.question.QuestionDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -24,6 +26,8 @@ public class AnswerDTO {
     private Question question;
 
     private Member member;
+
+    private Set<Member> voter;
     private Date create_date;
     private Date modify_date;
 
@@ -35,6 +39,7 @@ public class AnswerDTO {
                 .modify_date(modify_date)
                 .question(question)
                 .member(member)
+                .voter(voter)
                 .build();
     }
 
@@ -46,6 +51,7 @@ public class AnswerDTO {
                 .modify_date(m.getModify_date())
                 .question(m.getQuestion())
                 .member(m.getMember())
+                .voter(m.getVoter())
                 .build())
                 .toList();
 

@@ -1,13 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.answer.AnswerDTO;
+import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -17,6 +17,9 @@ public class AnswerController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private AccountService accountService;
 
     @PostMapping("/create")
     public String answerCreate(Principal principal, AnswerDTO answer, @RequestParam ("question_id") Long questionId, @RequestParam ("author_id") Long authorId) {
@@ -37,5 +40,14 @@ public class AnswerController {
 
         answerService.remove(id);
         return "redirect:/question/detail/"+questionId;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String answerVote(Principal principal, @PathVariable("id") Long id) {
+        AnswerDTO answerDto = answerService.get(id);
+        MemberDTO memberDto = accountService.get(principal.getName());
+        answerService.vote(answerDto, memberDto);
+        return String.format("redirect:/question/detail/%s", answerDto.getQuestion().getId());
     }
 }

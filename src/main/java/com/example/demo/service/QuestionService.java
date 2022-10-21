@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.member.Member;
+import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.question.Question;
 import com.example.demo.domain.question.QuestionDTO;
 import org.springframework.data.domain.Page;
@@ -20,5 +22,7 @@ public interface QuestionService {
 	void modify(QuestionDTO question, Long authorId);
 
 	void remove(Long id);
+
+	void vote(QuestionDTO questionDto, MemberDTO memberDto);
 
 }

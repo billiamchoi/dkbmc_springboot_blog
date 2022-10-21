@@ -20,9 +20,10 @@
             </div>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" id="recommend-btn">
+            <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" id="recommend-btn"
+               th:data-uri="@{|/question/vote/${question.id}|}">
                 추천
-                <span class="badge rounded-pill bg-success" >0</span>
+                <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
             </a>
             <button type="button" class="mt-4 btn btn-primary mb-2" th:onclick="|location.href='@{/question/modify/{questionId}(questionId=${question.id})}'|" th:hidden="${username == question.member.username} ? null : 'true'">수정하기</button>
             <button type="submit" class="mt-4 btn btn-danger mb-2" th:hidden="${username == question.member.username} ? null : 'true'">삭제하기</button>
@@ -49,9 +50,10 @@
                 </div>
             </div>
             <div sec:authorize="isAuthenticated()">
-                <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" id="recommend-btn">
+                <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" id="recommend-btn"
+                   th:data-uri="@{|/answer/vote/${answer.id}|}">
                     추천
-                    <span class="badge rounded-pill bg-success" >0</span>
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
                 </a>
                 <button class="btn btn-outline-secondary" type="submit"  id="modify" data-oper="modify" th:answerId="${answer.id}" th:hidden="${username == answer.member.username} ? null : 'true'">수정</button>
                 <button class="btn btn-outline-secondary" type="submit" id="delete" data-oper="delete" th:answerId="${answer.id}" th:hidden="${username == answer.member.username} ? null : 'true'">삭제</button>
@@ -111,5 +113,16 @@
             formObj.submit();
         })
     })
+
+    // 추천 버튼 클릭시 화인 창 설정
+    const recommend_elements = document.getElementsByClassName("recommend");
+    Array.from(recommend_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 추천하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
 </script>
 </html>

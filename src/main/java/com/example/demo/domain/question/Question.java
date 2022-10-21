@@ -48,6 +48,7 @@ public class Question {
                 .modify_date(modify_date)
                 .answer(answer)
                 .member(member)
+                .voter(voter)
                 .build();
     }
 }

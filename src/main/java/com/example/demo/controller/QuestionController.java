@@ -11,6 +11,7 @@ import com.example.demo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -124,6 +125,17 @@ public class QuestionController {
 
         questionService.remove(id);
         return "redirect:/question/list";
+
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Long id) {
+        QuestionDTO questionDto = questionService.get(id);
+        MemberDTO memberDto = accountService.get(principal.getName());
+        questionService.vote(questionDto, memberDto);
+
+        return String.format("redirect:/question/detail/%s", id);
 
     }
 }
