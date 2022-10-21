@@ -11324,15 +11324,23 @@ html {
   resize: none;
 }
 
+#recommend-btn {
+  position: absolute;
+  margin-top: -2rem;
+  height: 2.24rem;
+}
+
+
 .textarea-container button#modify {
   position: absolute;
   top: 5.8rem;
+  left: 5rem;
 }
 
 .textarea-container button#delete {
   position: absolute;
   top: 5.8rem;
-  left: 4rem;
+  left: 9rem;
 }
 
 .d-flex justify-content-end {
@@ -11353,3 +11361,4 @@ html {
 div.d-flex.justify-content-end.author-name-container {
   margin-top: -5rem !important;
 }
+
