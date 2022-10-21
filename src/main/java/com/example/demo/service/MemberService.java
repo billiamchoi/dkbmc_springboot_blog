@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.domain.member.Role;
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.member.MemberDTO;
@@ -15,10 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
