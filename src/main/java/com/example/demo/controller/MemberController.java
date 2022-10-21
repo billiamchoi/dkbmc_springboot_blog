@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -159,6 +160,14 @@ public class MemberController {
 
         accountService.remove(id);
         return "redirect:/account/logout";
+    }
+
+    @PostMapping("/withdrawal")
+    public String memberWithdrawl(HttpSession session, @RequestParam("id") Long id) {
+
+        accountService.withdrawal(id);
+        session.invalidate();
+        return "redirect:/";
     }
 }
 

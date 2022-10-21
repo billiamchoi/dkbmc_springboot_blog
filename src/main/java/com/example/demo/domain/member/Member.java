@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -28,6 +29,10 @@ public class Member {
     @Column(length = 100, nullable = false)
     private String password;
 
+    @Column(name= "is_active")
+    @ColumnDefault("true")
+    private boolean isActive;
+
     @OneToMany(mappedBy = "member", orphanRemoval = true)
     private Set<Question> question;
 
@@ -40,6 +45,7 @@ public class Member {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.isActive = true;
     }
 
     public MemberDTO toDtO() {

@@ -10,4 +10,6 @@ public interface AccountService {
     void modify(MemberModifyDTO memberModifyDTO);
 
     void remove(Long id);
+
+    void withdrawal(Long id);
 }

@@ -15,7 +15,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Autowired
     private MemberRepository repository;
-    
+
     @Override
     public MemberDTO get(String username) {
 
@@ -39,5 +39,11 @@ public class AccountServiceImpl implements AccountService{
     public void remove(Long id) {
 
         repository.deleteById(id);
+    }
+
+    @Override
+    public void withdrawal(Long id) {
+
+        repository.withdrawalMember(id);
     }
 }
