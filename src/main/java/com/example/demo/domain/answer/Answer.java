@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -30,6 +31,9 @@ public class Answer {
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
     private Member member;
+
+    @ManyToMany
+    Set<Member> voter;
 
     private Date create_date;
 

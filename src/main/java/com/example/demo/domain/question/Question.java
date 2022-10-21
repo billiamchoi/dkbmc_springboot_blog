@@ -25,14 +25,19 @@ public class Question {
 
     private String content;
     private String subject;
-    private Date create_date;
-    private Date modify_date;
     @OneToMany(mappedBy = "question", orphanRemoval = true)
     private Set<Answer> answer;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
     private Member member;
+
+    @ManyToMany
+    Set<Member> voter;
+
+    private Date create_date;
+    private Date modify_date;
+
 
     public QuestionDTO toDto() {
         return QuestionDTO.builder()
