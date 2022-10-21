@@ -63,6 +63,7 @@ public class AnswerServiceImpl implements AnswerService {
 
         Date create_date = aa.get().getCreate_date();
         answerDto.setQuestion(question);
+        answerDto.setVoter(aa.get().getVoter());
         answerDto.setMember(member);
         answerDto.setCreate_date(create_date);
         answerDto.setModify_date(new Date());

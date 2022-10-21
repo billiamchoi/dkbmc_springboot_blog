@@ -62,6 +62,7 @@ public class QuestionServiceImpl implements QuestionService{
 
 		Optional<Question> qq = questionRepository.findById(questionDto.getId());
 		Date created_date = qq.get().getCreate_date();
+		questionDto.setVoter(qq.get().getVoter());
 		questionDto.setMember(member);
 		questionDto.setCreate_date(created_date);
 		questionDto.setModify_date(new Date());
