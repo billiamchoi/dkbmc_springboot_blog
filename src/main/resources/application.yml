@@ -1,8 +1,4 @@
 spring:
-  security:
-    user:
-      name: admin
-      password: 1234
   thymeleaf:
     cache: 'false'
     prefix: /WEB-INF/views/
