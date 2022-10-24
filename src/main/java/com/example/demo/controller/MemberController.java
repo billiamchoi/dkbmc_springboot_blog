@@ -136,6 +136,12 @@ public class MemberController {
             return "/account/modify";
         }
 
+        if (!memberModifyDTO.getPassword2().equals(memberModifyDTO.getPassword3())) {
+            bindingResult.rejectValue("password2", "passwordIncorrect",
+                    "2개의 새로운 패스워드가 일치하지 않습니다.");
+            return "/account/modify";
+        }
+
         if(!principal.getName().equals(memberDTO.getUsername())) {
             try{
                 memberService.joinUser(memberDTO);
