@@ -3,8 +3,8 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.member.MemberModifyDTO;
-import com.example.demo.service.AccountService;
-import com.example.demo.service.MemberService;
+import com.example.demo.service.member.AccountService;
+import com.example.demo.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

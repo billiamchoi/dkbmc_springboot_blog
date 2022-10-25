@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.member;
 
 import com.example.demo.domain.member.Role;
 import com.example.demo.domain.member.Member;

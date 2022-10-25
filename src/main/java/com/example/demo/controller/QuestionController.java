@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.demo.domain.member.MemberDTO;
-import com.example.demo.service.AccountService;
-import com.example.demo.service.AnswerService;
+import com.example.demo.service.member.AccountService;
+import com.example.demo.service.answer.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.domain.question.QuestionDTO;
-import com.example.demo.service.QuestionService;
+import com.example.demo.service.question.QuestionService;
 
 @Controller
 @RequestMapping("/question")

@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.domain.member.MemberDTO;
-import com.example.demo.service.AccountService;
-import com.example.demo.service.AnswerService;
+import com.example.demo.service.member.AccountService;
+import com.example.demo.service.answer.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
