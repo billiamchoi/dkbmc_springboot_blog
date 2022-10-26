@@ -59,7 +59,7 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(question);
 	}
 
-	// 답변 생성 서비스
+	// 질문 생성 서비스
 	// controller로부터 질문 객체, 글쓴이id를 받아 Repository까지 넘겨줌
 	// repositoy에서 나온 결과값은 Optional이기때문에 .get()을 통해 Entity로 변환하여
 	// 전체적인 Set을 하고 save()로 저장함
