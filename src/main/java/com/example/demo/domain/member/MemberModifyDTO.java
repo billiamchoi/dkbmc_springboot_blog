@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 // 새로운 비밀번호 확인 validation을 위하여 존재함
 @Getter
 @Setter
-@ToString
 public class MemberModifyDTO {
 
     private Long id;

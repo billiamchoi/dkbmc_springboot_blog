@@ -2,10 +2,7 @@ package com.example.demo.domain.question;
 
 import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,6 +31,7 @@ public class Question {
     private Set<Answer> answer;
 
     // Member Entity와 ManyToOne 매핑 (Question(다) : Member(1))
+
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
     private Member member;
