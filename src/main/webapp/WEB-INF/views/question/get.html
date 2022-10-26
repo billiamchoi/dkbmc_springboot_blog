@@ -1,10 +1,10 @@
+<!--질문과 답변 페이지-->
+<!-- th:="${username == question.member.username} ? null : 'true'" 로 질문/답변 생성/수정/삭제 권한 로직 구현  -->
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="includes/header.html :: head">
 </head>
 <body>
-
-<!-- Navigation-->
 <div th:insert="includes/navbar.html  :: nav">  </div>
 <div class="container">
     <h3 th:text="${question.subject}"></h3>
@@ -81,6 +81,7 @@
 </div>
 </body>
 <script>
+    <!-- jquery를 사용하여 답변 수정 삭제 로직 구현   -->
     $(document).ready(function () {
 
         $('button#modify, button#delete').on("click", function(e){

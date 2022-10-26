@@ -1,3 +1,4 @@
+<!--내 정보 수정 페이지-->
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="includes/header.html :: head">
@@ -8,6 +9,8 @@
 <div class="container">
   <h3>내 정보 수정</h3>
   <hr>
+  <!-- th:oject로 memberModifyDTO를 항상 여기에 렌더링하도록 설정 -->
+  <!-- th:field로 memberModifyDTO의 프로퍼티를 각각 설정함-->
   <form role="form" action="/account/modify" method="post" th:object="${memberModifyDTO}">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <div th:replace="includes/formErrors.html :: formErrorsFragment"></div>
