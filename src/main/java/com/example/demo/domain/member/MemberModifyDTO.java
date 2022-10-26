@@ -3,11 +3,12 @@ package com.example.demo.domain.member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+// 회원 정보 수정시 기존 MemberDTO에서 핸들링할수 없는 새로운 비밀번호와
+// 새로운 비밀번호 확인 validation을 위하여 존재함
 @Getter
 @Setter
 @ToString
@@ -33,23 +34,4 @@ public class MemberModifyDTO {
 
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-
-    public Member toEntity(){
-        return Member.builder()
-                .id(id)
-                .username(username)
-                .email(email)
-                // 이거 엔티티로 가져갈때는 새로운 비밀번호를 가져감
-                .password(password2)
-                .build();
-    }
-
-    public MemberDTO toMemberDTO(){
-        return MemberDTO.builder()
-                .id(id)
-                .username(username)
-                .email(email)
-                .password(password2)
-                .build();
-    }
 }

@@ -2,11 +2,8 @@ package com.example.demo.domain.answer;
 
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.question.Question;
-import com.example.demo.domain.question.QuestionDTO;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +28,9 @@ public class AnswerDTO {
     private Date create_date;
     private Date modify_date;
 
+    // DTO 객체 -> Entity 객체 전환시 사용
+    // Controller에서 DTO 객체로 받아 serviceImpl까지 전달되고 Repository에서 argument로
+    // Entity 객체를 전달해줘야 하기 위함
     public Answer toEntity() {
         return Answer.builder()
                 .id(id)
@@ -42,7 +42,8 @@ public class AnswerDTO {
                 .voter(voter)
                 .build();
     }
-
+    // listByQuestion()과 같이 여러개의 레코드를 데이터베이스에서 조회하여 front까지 렌더링할때 사용
+    // serviceImpl에서 사용
     public List<AnswerDTO> toDtoList(List<Answer> answerList) {
         List<AnswerDTO> answerDTOList = answerList.stream().map(m -> AnswerDTO.builder()
                 .id(m.getId())

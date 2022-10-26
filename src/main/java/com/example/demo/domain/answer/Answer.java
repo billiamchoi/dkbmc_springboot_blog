@@ -24,14 +24,18 @@ public class Answer {
     private Long id;
 
     private String content;
+
+    // Question Entity와 ManyToOne 매핑 (Answer(다) : Question(1))
     @ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY)
     @JoinColumn(name="question_id")
     private Question question;
 
+    // Member Entity와 ManyToOne 매핑 (Answer(다) : Member(1))
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
     private Member member;
 
+    // 추천 기능을 위한 ManyToMany 매핑  (Answer(다) : voter(다))
     @ManyToMany
     Set<Member> voter;
 
@@ -39,6 +43,9 @@ public class Answer {
 
     private Date modify_date;
 
+    // Etity 객체 -> DTO 객체 전환시 사용
+    // get()과 같이 특정한 레코드를 데이터베이스에서 조회하여 front까지 렌더링할때 사용
+    // serviceImpl에서 사용
     public AnswerDTO toDto() {
         return AnswerDTO.builder()
                 .id(id)

@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService{
         MemberDTO memberDto = new MemberDTO();
         Optional<Member> memberOptional = repository.findByUsername(username);
         Member member = memberOptional.get();
-        memberDto = member.toDtO();
+        memberDto = member.toDto();
         return memberDto;
     }
 

@@ -144,7 +144,7 @@ public class MemberController {
         String username = member.getUsername();
         String email = member.getEmail();
         Long id = member.getId();
-        System.out.println("here"+id);
+
         // account/modify에서 명시한 th:object인 memberDTO는 여기의 memberDTO를 의미하며 여기서
         // set해서 데려가서 이 페이지 도달시 항상 변경전 사용자id와 이메일을 input의 value로 가져온다.
         memberModifyDTO.setId(id);
@@ -167,8 +167,6 @@ public class MemberController {
     @PostMapping("/modify")
     public String myInfoModify(Principal principal, @Valid MemberModifyDTO memberModifyDTO, BindingResult bindingResult) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        // 중복 id 체크를 위해 회원가입 시도하려면 MemberDTO로 넣어야함
-        MemberDTO memberDTO = memberModifyDTO.toMemberDTO();
 
         if (bindingResult.hasErrors()) {
             return "/account/modify";

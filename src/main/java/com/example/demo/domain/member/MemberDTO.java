@@ -1,11 +1,8 @@
 package com.example.demo.domain.member;
-
 import lombok.*;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
 
 @Getter
 @Setter
@@ -30,6 +27,9 @@ public class MemberDTO {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
+    // DTO 객체 -> Entity 객체 전환시 사용
+    // Controller에서 DTO 객체로 받아 serviceImpl까지 전달되고 Repository에서 argument로
+    // Entity 객체를 전달해줘야 하기 위함
     public Member toEntity(){
         return Member.builder()
                 .id(id)
