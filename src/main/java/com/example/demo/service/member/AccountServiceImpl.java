@@ -16,6 +16,9 @@ public class AccountServiceImpl implements AccountService{
     @Autowired
     private MemberRepository repository;
 
+    // 특정 멤버 조회
+    // controller로부터 username을 받아 특정 멤버 조회 후 Repository까지 넘겨줌
+    // 해당 MemberDTO를 반환
     @Override
     public MemberDTO get(String username) {
 
@@ -26,6 +29,9 @@ public class AccountServiceImpl implements AccountService{
         return memberDto;
     }
 
+    // 멤버 수정 서비스
+    // controller로부터 멤버 객체 받아
+    // Controller에서 받은 String 비밀번호를 -> hash로 변환후 Repository까지 넘겨줌
     @Override
     public void modify(MemberModifyDTO memberModifyDTO) {
 
@@ -35,12 +41,16 @@ public class AccountServiceImpl implements AccountService{
         this.repository.updateMember( memberModifyDTO.getPassword2(), memberModifyDTO.getEmail(), memberModifyDTO.getId());
     }
 
+    // 멤버 삭제 서비스
+    // controller로부터 id를 받아 Repository까지 넘겨줌
     @Override
     public void remove(Long id) {
 
         repository.deleteById(id);
     }
 
+    // 멤버 탈퇴 서비스
+    // controller로부터 id를 받아 Repository까지 넘겨줌
     @Override
     public void withdrawal(Long id) {
 

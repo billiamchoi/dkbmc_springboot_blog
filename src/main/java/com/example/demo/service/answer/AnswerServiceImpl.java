@@ -29,6 +29,11 @@ public class AnswerServiceImpl implements AnswerService {
     private MemberRepository memberRepository;
 
 
+    // 답변 생성 서비스
+    // controller로부터 답변 객체, 답변이 속해있는 질문id, 글쓴이id를 받아 Repository까지 넘겨줌
+    // 변수 question에 질문id로 질문을 찾아 set
+    // 변수 memeber에 글쓴이id로 멤버을 찾아  set
+    // 여기서 작성 일시, 수정 일시 모두 현재 set
     @Override
     public void create(AnswerDTO answerDto, Long questionId, Long authorId) {
 
@@ -43,6 +48,9 @@ public class AnswerServiceImpl implements AnswerService {
         this.answerRepository.save(answer);
     }
 
+    // 질문에 해당한 답변 조회 서비스
+    // controller로 부터 받은 id로 Repository에 전달해 특정 질문 id에 속한 답변 조회하여
+    // List<AnswerDTO> 형태로 반환함
     @Override
     public List<AnswerDTO> listByQuestion(Long id) {
 
@@ -51,6 +59,9 @@ public class AnswerServiceImpl implements AnswerService {
         return answerDtoList;
     }
 
+    // 답변 수정 서비스
+    // controller로부터 답변 객체, 답변이 속해있는 질문id, 글쓴이id를 받아 Repository까지 넘겨줌
+    // 들어온 답변 객체 getter를 통해 해당 Entity를 찾고 수정
     @Override
     public void modify(AnswerDTO answerDto, Long questionId, Long authorId) {
 
@@ -69,11 +80,17 @@ public class AnswerServiceImpl implements AnswerService {
         this.answerRepository.save(answer);
     }
 
+    // 답변 삭제 서비스
+    // controller로부터 id를 받아 Repository까지 넘겨줌
     @Override
     public void remove(Long id) {
         answerRepository.deleteById(id);
     }
 
+    // 답변 추천 서비스
+    // controller로부터 AnswerDTO 객체, MemberDTO 객체를 받아
+    // memberDto를 Entity로 변환하여 answerDto voter에 추가하고
+    // answerDto를 Entity로 변환하여 Repository까지 넘겨줌
     @Override
     public void vote(AnswerDTO answerDto, MemberDTO memberDto) {
 
@@ -81,6 +98,9 @@ public class AnswerServiceImpl implements AnswerService {
         this.answerRepository.save(answerDto.toEntity());
     }
 
+    // 특정 답변 조회
+    // controller로부터 id를 받아 특정 답변 조회 후 Repository까지 넘겨줌
+    // 해당 AnswerDTO를 반환
     @Override
     public AnswerDTO get(Long id){
 

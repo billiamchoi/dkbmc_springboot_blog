@@ -26,6 +26,9 @@ public class QuestionServiceImpl implements QuestionService{
 	@Autowired
 	private MemberRepository memberRepository;
 
+	// 검색을 안할 경우 질문 조회 서비스
+	// controller로 부터 받은 Pageable 객체를 Repository에 넘겨주고
+	// toDtoList()를 사용하여 Page<QuestionDTO> 형태로 반환함
 	@Override
 	public Page<QuestionDTO> list(Pageable pageable) {
 		Page<Question> questionList = questionRepository.findAllByOrderByIdAsc(pageable);
@@ -33,6 +36,9 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionDtoList;
 	}
 
+	// 검색을 할 경우 질문 조회 서비스
+	// controller로 부터 받은 searchKeyword와  Pageable 객체를 Repository에 넘겨주고
+	// toDtoList()를 사용하여 Page<QuestionDTO> 형태로 반환함
 	@Override
 	public Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable) {
 
@@ -53,6 +59,10 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(question);
 	}
 
+	// 답변 생성 서비스
+	// controller로부터 질문 객체, 글쓴이id를 받아 Repository까지 넘겨줌
+	// repositoy에서 나온 결과값은 Optional이기때문에 .get()을 통해 Entity로 변환하여
+	// 전체적인 Set을 하고 save()로 저장함
 	@Override
 	public void modify(QuestionDTO questionDto, Long authorId) {
 
@@ -69,11 +79,16 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(question);
 	}
 
+	// 질문 삭제 서비스
+	// controller로부터 id를 받아 Repository까지 넘겨줌
 	@Override
 	public void remove(Long id) {
 		questionRepository.deleteById(id);
 	}
 
+	// 특정 질문 조회
+	// controller로부터 id를 받아 특정 답변 조회 후 Repository까지 넘겨줌
+	// 해당 QuestionDTO 반환
 	@Override
 	public QuestionDTO get(Long id) {
 
@@ -84,6 +99,10 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionDto;
 	}
 
+	// 질문 추천 서비스
+	// controller로부터 QuestionDTO 객체, MemberDTO 객체를 받아
+	// memberDto를 Entity로 변환하여 questionDto voter에 추가하고
+	// questionDto를 Entity로 변환하여 Repository까지 넘겨줌
 	@Override
 	public void vote(QuestionDTO questionDto, MemberDTO memberDto) {
 

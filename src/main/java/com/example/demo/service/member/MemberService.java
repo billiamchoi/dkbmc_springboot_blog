@@ -24,6 +24,7 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
+    // 회원가입 로직을 담당하는 서비스 함수
     @Transactional
     public Long joinUser(MemberDTO memberDto) {
 
@@ -34,6 +35,7 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(memberDto.toEntity()).getId();
     }
 
+    // 로그인 로직을 담당하는 서비스 함수
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> userWrapper = memberRepository.findByUsername(username);
