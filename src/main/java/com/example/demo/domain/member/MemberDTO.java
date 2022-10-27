@@ -23,10 +23,6 @@ public class MemberDTO {
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
     private String password2;
 
-
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
-
     // DTO 객체 -> Entity 객체 전환시 사용
     // Controller에서 DTO 객체로 받아 serviceImpl까지 전달되고 Repository에서 argument로
     // Entity 객체를 전달해줘야 하기 위함
