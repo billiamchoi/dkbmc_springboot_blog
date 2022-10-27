@@ -26,7 +26,7 @@ public class QuestionDTO {
     // A collection with cascade="all-delete-orphan" was no longer referenced by the owning entity instance
     // answer = emptySet으로 초기화하는 것으로 문제 해결함
     private Set<Answer> answer = Collections.emptySet();
-    
+
     private Member member;
 
     private Set<Member> voter;

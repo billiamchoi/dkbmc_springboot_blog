@@ -1,4 +1,4 @@
-package com.example.demo.restResponse;
+package com.example.demo.rest.response;
 
 import lombok.Getter;
 
