@@ -1,12 +1,17 @@
 package com.example.demo.config;
 
 
+import com.example.demo.config.jwt.JwtAuthenticationFilter;
+import com.example.demo.config.jwt.JwtAuthorizationFilter;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,6 +33,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig  {
 
     private final MemberService memberService;
+    private final AuthenticationConfiguration authenticationConfiguration;
+
+    @Autowired
+    private MemberRepository userRepository;
+
+    @Autowired
+    private CorsConfig corsConfig;
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
@@ -36,20 +49,29 @@ public class SecurityConfig  {
     @Order(1)
     @Bean
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
-        http
-                .antMatcher("/api/v1/**")
-                .authorizeRequests()
-                    .antMatchers("/api/register").permitAll()
+        return http.antMatcher("/api/**")
+                .csrf().disable()
+                .addFilter(corsConfig.corsFilter())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .formLogin().disable()
+                .httpBasic().disable()
 
-        return http.build();
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                .addFilter(jwtAuthorizationFilter())
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .build();
     }
 
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 // 페이지 별 권한 설정
@@ -66,9 +88,17 @@ public class SecurityConfig  {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout"))
                 .logoutSuccessUrl("/account/logout/result")
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .and()
+                .csrf();
 
         return http.build();
+    }
+    //필터로 기본 api 로그인 path override
+    public JwtAuthenticationFilter jwtAuthorizationFilter() throws Exception {
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/account/login");
+        return jwtAuthenticationFilter;
     }
 
     @Bean
@@ -76,8 +106,9 @@ public class SecurityConfig  {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
