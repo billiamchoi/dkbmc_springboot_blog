@@ -60,15 +60,14 @@ public class SecurityConfig  {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                // "/api/v1/account/login"에서도 토큰이 발행되도록 filter 설정
                 .addFilter(jwtAuthorizationFilter())
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/api/v1/account/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .build();
     }
-
-
 
     @Bean
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {

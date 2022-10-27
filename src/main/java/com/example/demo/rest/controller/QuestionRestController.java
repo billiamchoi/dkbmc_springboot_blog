@@ -2,7 +2,7 @@ package com.example.demo.rest.controller;
 
 import com.example.demo.domain.question.Question;
 import com.example.demo.repository.QuestionRepository;
-import com.example.demo.rest.response.QuestionResponse;
+import com.example.demo.rest.response.QuestionResponseDTO;
 import com.example.demo.rest.response.common.Message;
 import com.example.demo.rest.response.common.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +31,17 @@ public class QuestionRestController {
     public ResponseEntity<Message> questionGetAll() {
 
         List<Question> questionOpt = questionRepository.findAll();
-        List<QuestionResponse> qr = new ArrayList<QuestionResponse>();
+        List<QuestionResponseDTO> qr = new ArrayList<QuestionResponseDTO>();
 
         for (Question q : questionOpt) {
-           QuestionResponse questionResponse = new QuestionResponse();
-           questionResponse.setId(q.getId());
-           questionResponse.setContent(q.getContent());
-           questionResponse.setSubject(q.getSubject());
-           questionResponse.setCreate_date(q.getCreate_date());
-           questionResponse.setModify_date(q.getModify_date());
-           questionResponse.setAuthor_id(q.getMember().getId());
-           qr.add(questionResponse);
+           QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
+           questionResponseDTO.setId(q.getId());
+           questionResponseDTO.setContent(q.getContent());
+           questionResponseDTO.setSubject(q.getSubject());
+           questionResponseDTO.setCreate_date(q.getCreate_date());
+           questionResponseDTO.setModify_date(q.getModify_date());
+           questionResponseDTO.setAuthor_id(q.getMember().getId());
+           qr.add(questionResponseDTO);
         }
 
         Message message = new Message();
@@ -61,7 +61,7 @@ public class QuestionRestController {
 
         Optional<Question> questionOpt = questionRepository.findById(id);
         Question question =  questionOpt.get();
-        QuestionResponse response = new QuestionResponse();
+        QuestionResponseDTO response = new QuestionResponseDTO();
         response.setId(question.getId());
         response.setContent(question.getContent());
         response.setSubject(question.getSubject());
