@@ -6,6 +6,7 @@ import com.example.demo.repository.MemberRepository;
 import com.example.demo.rest.request.SignUpDTO;
 import com.example.demo.rest.response.common.Message;
 import com.example.demo.rest.response.common.StatusEnum;
+import com.example.demo.service.member.AccountService;
 import com.example.demo.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,9 @@ public class MemberRestController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private AccountService accountService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Message> memberGetOne(@PathVariable Long id) {
 
@@ -45,12 +49,20 @@ public class MemberRestController {
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignUpDTO signUpDto){
+    public ResponseEntity<Message> signup(@RequestBody SignUpDTO signUpDto){
 
         MemberDTO memberDto = signUpDto.toMemberDto();
-
         memberService.joinUser(memberDto);
+        MemberDTO retrievedMemberDto = accountService.get(memberDto.getUsername());
 
-        return "201 OK";
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        message.setStatus(StatusEnum.CREATED);
+        message.setMessage("success");
+        message.setData(retrievedMemberDto);
+
+        return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }
 }
