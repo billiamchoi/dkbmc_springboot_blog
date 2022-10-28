@@ -1,14 +1,20 @@
 package com.example.demo.service.question;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.demo.config.jwt.JwtProperties;
 import com.example.demo.domain.PageDTO;
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.question.Question;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.rest.response.QuestionResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -110,4 +116,58 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(questionDto.toEntity());
 	}
 
+	@Override
+	public List<QuestionResponseDTO> restGetAll() {
+
+		List<Question> questionList = questionRepository.findAll();
+		List<QuestionResponseDTO> questionResponseDtoList = new ArrayList<QuestionResponseDTO>();
+
+		for (Question q : questionList) {
+			QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
+			questionResponseDTO.setId(q.getId());
+			questionResponseDTO.setContent(q.getContent());
+			questionResponseDTO.setSubject(q.getSubject());
+			questionResponseDTO.setCreate_date(q.getCreate_date());
+			questionResponseDTO.setModify_date(q.getModify_date());
+			questionResponseDTO.setAuthor_id(q.getMember().getId());
+			questionResponseDtoList.add(questionResponseDTO);
+		}
+
+		return questionResponseDtoList;
+	}
+
+	@Override
+	public QuestionResponseDTO restGetOne(Long id) {
+
+		Question question = questionRepository.findById(id).get();
+		QuestionResponseDTO questionResponseDto = new QuestionResponseDTO();
+
+		// builder를 이용해서 set 한번에하는 방법으로 수정할 필요가 있음
+		questionResponseDto.setId(question.getId());
+		questionResponseDto.setContent(question.getContent());
+		questionResponseDto.setSubject(question.getSubject());
+		questionResponseDto.setCreate_date(question.getCreate_date());
+		questionResponseDto.setModify_date(question.getModify_date());
+		questionResponseDto.setAuthor_id(question.getMember().getId());
+
+		return questionResponseDto;
+	}
+
+	@Override
+	public QuestionResponseDTO restCreate(String jwtToken, QuestionDTO questionDto) {
+
+		String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+				.getClaim("username").asString();
+
+		Member member = memberRepository.findByUsername(username).get();
+
+		questionDto.setMember(member);
+		questionDto.setCreate_date(new Date());
+		questionDto.setModify_date(new Date());
+		Question savedQuestion = questionRepository.save(questionDto.toEntity());
+		QuestionResponseDTO questionResponseDto = savedQuestion.toResponseDto();
+
+		return questionResponseDto;
+	}
 }

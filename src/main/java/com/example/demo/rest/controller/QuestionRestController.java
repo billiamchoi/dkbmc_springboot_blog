@@ -11,6 +11,7 @@ import com.example.demo.rest.response.QuestionResponseDTO;
 import com.example.demo.rest.response.common.Message;
 import com.example.demo.rest.response.common.StatusEnum;
 import com.example.demo.service.member.AccountService;
+import com.example.demo.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,24 +33,15 @@ public class QuestionRestController {
     private QuestionRepository questionRepository;
 
     @Autowired
+    private QuestionService questionService;
+
+    @Autowired
     private AccountService accountService;
 
     @GetMapping({"/", ""})
     public ResponseEntity<Message> questionGetAll() {
 
-        List<Question> questionOpt = questionRepository.findAll();
-        List<QuestionResponseDTO> qr = new ArrayList<QuestionResponseDTO>();
-
-        for (Question q : questionOpt) {
-           QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
-           questionResponseDTO.setId(q.getId());
-           questionResponseDTO.setContent(q.getContent());
-           questionResponseDTO.setSubject(q.getSubject());
-           questionResponseDTO.setCreate_date(q.getCreate_date());
-           questionResponseDTO.setModify_date(q.getModify_date());
-           questionResponseDTO.setAuthor_id(q.getMember().getId());
-           qr.add(questionResponseDTO);
-        }
+        List<QuestionResponseDTO> questionResponseDtoList = questionService.restGetAll();
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
@@ -57,7 +49,7 @@ public class QuestionRestController {
 
         message.setStatus(StatusEnum.OK);
         message.setMessage("success");
-        message.setData(qr);
+        message.setData(questionResponseDtoList);
 
         return new ResponseEntity<>(message, headers,HttpStatus.OK);
     }
@@ -65,15 +57,7 @@ public class QuestionRestController {
     @GetMapping("/{id}")
     public ResponseEntity<Message> questionGetOne(@PathVariable Long id) {
 
-        Optional<Question> questionOpt = questionRepository.findById(id);
-        Question question =  questionOpt.get();
-        QuestionResponseDTO response = new QuestionResponseDTO();
-        response.setId(question.getId());
-        response.setContent(question.getContent());
-        response.setSubject(question.getSubject());
-        response.setCreate_date(question.getCreate_date());
-        response.setModify_date(question.getModify_date());
-        response.setAuthor_id(question.getMember().getId());
+        QuestionResponseDTO questionResponseDto = questionService.restGetOne(id);
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
@@ -81,7 +65,7 @@ public class QuestionRestController {
 
         message.setStatus(StatusEnum.OK);
         message.setMessage("success");
-        message.setData(response);
+        message.setData(questionResponseDto);
 
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
     }
@@ -94,15 +78,7 @@ public class QuestionRestController {
     @PostMapping({"/", ""})
     public ResponseEntity<Message> questionCreate( @RequestHeader("Authorization") String jwtToken, @RequestBody QuestionDTO questionDto) {
 
-        String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
-        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
-                .getClaim("username").asString();
-        Member member = accountService.get(username).toEntity();
-
-        questionDto.setMember(member);
-        questionDto.setCreate_date(new Date());
-        questionDto.setModify_date(new Date());
-        Question savedQuestion = questionRepository.save(questionDto.toEntity());
+        QuestionResponseDTO questionResponseDto = questionService.restCreate(jwtToken, questionDto);
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
@@ -110,7 +86,7 @@ public class QuestionRestController {
 
         message.setStatus(StatusEnum.CREATED);
         message.setMessage("success");
-        message.setData(savedQuestion);
+        message.setData(questionResponseDto);
 
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }

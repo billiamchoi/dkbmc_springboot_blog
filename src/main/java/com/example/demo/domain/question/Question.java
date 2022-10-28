@@ -2,6 +2,7 @@ package com.example.demo.domain.question;
 
 import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.member.Member;
+import com.example.demo.rest.response.QuestionResponseDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -56,6 +57,17 @@ public class Question {
                 .answer(answer)
                 .member(member)
                 .voter(voter)
+                .build();
+    }
+
+    public QuestionResponseDTO toResponseDto() {
+        return QuestionResponseDTO.builder()
+                .id(id)
+                .content(content)
+                .subject(subject)
+                .author_id(member.getId())
+                .create_date(create_date)
+                .modify_date(modify_date)
                 .build();
     }
 }

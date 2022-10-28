@@ -1,12 +1,13 @@
 package com.example.demo.rest.response;
 
-import lombok.Getter;
-
-import lombok.Setter;
+import lombok.*;
 
 
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class QuestionResponseDTO {
