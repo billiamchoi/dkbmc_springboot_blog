@@ -120,15 +120,15 @@ public class QuestionServiceImpl implements QuestionService{
 		List<QuestionResponseDTO> questionResponseDtoList = new ArrayList<QuestionResponseDTO>();
 
 		for (Question q : questionList) {
-			QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
-			questionResponseDTO.setId(q.getId());
-			questionResponseDTO.setContent(q.getContent());
-			questionResponseDTO.setSubject(q.getSubject());
-			questionResponseDTO.setCreate_date(q.getCreate_date());
-			questionResponseDTO.setModify_date(q.getModify_date());
-			questionResponseDTO.setAuthor_id(q.getMember().getId());
-			questionResponseDTO.setVote_count(q.getVoter().size());
-			questionResponseDtoList.add(questionResponseDTO);
+			QuestionResponseDTO questionResponseDto = new QuestionResponseDTO();
+			questionResponseDto.setId(q.getId());
+			questionResponseDto.setContent(q.getContent());
+			questionResponseDto.setSubject(q.getSubject());
+			questionResponseDto.setCreate_date(q.getCreate_date());
+			questionResponseDto.setModify_date(q.getModify_date());
+			questionResponseDto.setAuthor_id(q.getMember().getId());
+			questionResponseDto.setVote_count(q.getVoter().size());
+			questionResponseDtoList.add(questionResponseDto);
 		}
 
 		return questionResponseDtoList;

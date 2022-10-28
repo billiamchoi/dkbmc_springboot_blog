@@ -2,10 +2,13 @@ package com.example.demo.service.answer;
 
 import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.domain.member.MemberDTO;
+import com.example.demo.rest.response.AnswerResponseDTO;
 
 import java.util.List;
 
 public interface AnswerService {
+
+    //For Web
 
     // 답변 생성
     void create(AnswerDTO answer, Long questionId, Long authorId);
@@ -25,4 +28,8 @@ public interface AnswerService {
     // 답변 추천
     void vote(AnswerDTO answerDto, MemberDTO memberDto);
 
+    //For rest api
+
+    // 질문 id로 답변 목록 조회 api
+    List<AnswerResponseDTO> restGetAllByQuestionId(Long QuestionId);
 }

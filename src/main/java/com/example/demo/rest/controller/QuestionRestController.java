@@ -1,9 +1,11 @@
 package com.example.demo.rest.controller;
 
 import com.example.demo.domain.question.QuestionDTO;
+import com.example.demo.rest.response.AnswerResponseDTO;
 import com.example.demo.rest.response.QuestionResponseDTO;
 import com.example.demo.rest.response.common.Message;
 import com.example.demo.rest.response.common.StatusEnum;
+import com.example.demo.service.answer.AnswerService;
 import com.example.demo.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,9 @@ public class QuestionRestController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private AnswerService answerService;
 
     @GetMapping({"/", ""})
     public ResponseEntity<Message> questionGetAll() {
@@ -129,5 +134,23 @@ public class QuestionRestController {
         }
 
         return new ResponseEntity<>(message, headers, httpStatus);
+    }
+
+    // 질문 id로 답변 조회
+    @GetMapping("/{id}/answer")
+    public ResponseEntity<Message> answerGetAllByQuestionId(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
+        //401 error exception 만들어야됨
+        List<AnswerResponseDTO> answerResponseDtoList = answerService.restGetAllByQuestionId(id);
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        message.setStatus(StatusEnum.OK);
+        message.setMessage("success");
+        message.setData(answerResponseDtoList);
+
+        return new ResponseEntity<>(message, headers,HttpStatus.OK);
+
     }
 }

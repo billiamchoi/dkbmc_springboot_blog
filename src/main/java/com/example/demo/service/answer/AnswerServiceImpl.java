@@ -8,9 +8,11 @@ import com.example.demo.domain.question.Question;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.rest.response.AnswerResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +100,7 @@ public class AnswerServiceImpl implements AnswerService {
         this.answerRepository.save(answerDto.toEntity());
     }
 
+
     // 특정 답변 조회
     // controller로부터 id를 받아 특정 답변 조회 후 Repository까지 넘겨줌
     // 해당 AnswerDTO를 반환
@@ -109,5 +112,22 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = ansOpt.get();
         answerDto = answer.toDto();
         return answerDto;
+    }
+
+    @Override
+    public List<AnswerResponseDTO> restGetAllByQuestionId(Long QuestionId) {
+        List<Answer> answerList = answerRepository.findAnswerByQuestionIdOrderById(QuestionId);
+        List<AnswerResponseDTO> answerResponseDtoList = new ArrayList<AnswerResponseDTO>();
+
+        for (Answer a : answerList ) {
+            AnswerResponseDTO answerResponseDto = new AnswerResponseDTO();
+            answerResponseDto.setId(a.getId());
+            answerResponseDto.setContent(a.getContent());
+            answerResponseDto.setQuestion_id(a.getQuestion().getId());
+            answerResponseDto.setAuthor_id(a.getMember().getId());
+            answerResponseDto.setVote_count(a.getVoter().size());
+            answerResponseDtoList.add(answerResponseDto);
+        }
+        return answerResponseDtoList;
     }
 }
