@@ -49,4 +49,7 @@ public interface QuestionService {
 
 	// 질문 수정 api
 	QuestionResponseDTO restModify(String jwtToken, Long id, QuestionDTO questionDto);
+
+	// 질문 삭제 api
+	String restRemove(String jwtToken, Long id);
 }

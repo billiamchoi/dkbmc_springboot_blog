@@ -115,4 +115,34 @@ public class QuestionRestController {
 
         return new ResponseEntity<>(message, headers, httpStatus);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Message> questionDelete(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
+
+        HttpStatus httpStatus = null;
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        String messageText = questionService.restRemove(jwtToken, id);
+
+        if (messageText.equals("success")) {
+
+            message.setStatus(StatusEnum.OK);
+            message.setMessage(messageText);
+            message.setData(null);
+            httpStatus = HttpStatus.OK;
+        } else {
+
+            message.setStatus(StatusEnum.UNAUTHORIZED);
+            message.setMessage(messageText);
+            message.setData(null);
+            httpStatus = HttpStatus.UNAUTHORIZED;
+        }
+
+        return new ResponseEntity<>(message, headers, httpStatus);
+
+
+    }
 }
