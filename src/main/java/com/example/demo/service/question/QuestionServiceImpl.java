@@ -170,4 +170,37 @@ public class QuestionServiceImpl implements QuestionService{
 
 		return questionResponseDto;
 	}
+
+	@Override
+	public QuestionResponseDTO restModify(String jwtToken, Long id, QuestionDTO questionDto) {
+
+		Question question = questionRepository.findById(id).get();
+		QuestionResponseDTO questionResponseDto = new QuestionResponseDTO();
+
+		String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+				.getClaim("username").asString();
+
+		Long memberId = memberRepository.findByUsername(username).get().getId();
+
+		Long authorId = question.getMember().getId();
+
+		if (memberId.equals(authorId)) {
+			// api 요청자의 id와 글쓴이의 id가 같다면
+			questionResponseDto.setId(question.getId());
+			questionResponseDto.setSubject(questionDto.getSubject());
+			questionResponseDto.setContent(questionDto.getContent());
+			questionResponseDto.setCreate_date(question.getCreate_date());
+			questionResponseDto.setModify_date(new Date());
+			questionResponseDto.setAuthor_id(question.getMember().getId());
+
+			questionRepository.save(questionResponseDto.toEntity(question.getAnswer(), question.getMember(), question.getVoter()));
+		} else {
+			//다르면 401에러 및 에러메세지 : 글쓴이가 다릅니다 띄어줘야됨
+			// 일단 null로 띄어보자
+			questionResponseDto = null;
+		}
+
+		return questionResponseDto;
+	}
 }

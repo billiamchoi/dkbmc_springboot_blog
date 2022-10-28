@@ -1,9 +1,12 @@
 package com.example.demo.rest.response;
 
+import com.example.demo.domain.answer.Answer;
+import com.example.demo.domain.member.Member;
+import com.example.demo.domain.question.Question;
 import lombok.*;
 
-
 import java.util.Date;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -23,4 +26,17 @@ public class QuestionResponseDTO {
     private Date modify_date;
 
     private Long author_id;
+
+    public Question toEntity(Set<Answer> answer, Member member, Set<Member> voter) {
+        return Question.builder()
+                .id(id)
+                .subject(subject)
+                .content(content)
+                .create_date(create_date)
+                .modify_date(modify_date)
+                .answer(answer)
+                .member(member)
+                .voter(voter)
+                .build();
+    }
 }

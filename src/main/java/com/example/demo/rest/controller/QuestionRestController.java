@@ -20,10 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/v1/question")
@@ -76,7 +74,7 @@ public class QuestionRestController {
     // String username에 token을 디코딩하여 토큰 발행시 저장했던 username을 가져옴 (글쓴이 이름)
     // accountservice.get(username).toEntity()으로 가져와서 questionDto에 setmember 실행
     @PostMapping({"/", ""})
-    public ResponseEntity<Message> questionCreate( @RequestHeader("Authorization") String jwtToken, @RequestBody QuestionDTO questionDto) {
+    public ResponseEntity<Message> questionCreate(@RequestHeader("Authorization") String jwtToken, @RequestBody QuestionDTO questionDto) {
 
         QuestionResponseDTO questionResponseDto = questionService.restCreate(jwtToken, questionDto);
 
@@ -89,5 +87,32 @@ public class QuestionRestController {
         message.setData(questionResponseDto);
 
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Message> questionModify(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id, @RequestBody QuestionDTO questionDto) {
+
+        HttpStatus httpStatus = null;
+
+        QuestionResponseDTO questionResponseDto = questionService.restModify(jwtToken, id, questionDto);
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        if (questionResponseDto == null) {
+            message.setStatus(StatusEnum.UNAUTHORIZED);
+            message.setMessage("fail : unauthorized");
+            message.setData(null);
+            httpStatus = HttpStatus.UNAUTHORIZED;
+
+        } else {
+            message.setStatus(StatusEnum.OK);
+            message.setMessage("success");
+            message.setData(questionResponseDto);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(message, headers, httpStatus);
     }
 }

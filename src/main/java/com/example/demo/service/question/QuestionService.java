@@ -47,7 +47,6 @@ public interface QuestionService {
 	// 질문 생성 api
 	QuestionResponseDTO restCreate(String jwtToken, QuestionDTO questionDto);
 
-
-
-
+	// 질문 수정 api
+	QuestionResponseDTO restModify(String jwtToken, Long id, QuestionDTO questionDto);
 }
