@@ -9,6 +9,7 @@ import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.member.Member;
 import lombok.*;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
