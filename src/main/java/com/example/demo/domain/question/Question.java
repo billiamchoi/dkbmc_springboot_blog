@@ -66,6 +66,7 @@ public class Question {
                 .content(content)
                 .subject(subject)
                 .author_id(member.getId())
+                .vote_count(voter.size())
                 .create_date(create_date)
                 .modify_date(modify_date)
                 .build();

@@ -1,16 +1,9 @@
 package com.example.demo.rest.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.example.demo.config.jwt.JwtProperties;
-import com.example.demo.domain.member.Member;
-import com.example.demo.domain.question.Question;
 import com.example.demo.domain.question.QuestionDTO;
-import com.example.demo.repository.QuestionRepository;
 import com.example.demo.rest.response.QuestionResponseDTO;
 import com.example.demo.rest.response.common.Message;
 import com.example.demo.rest.response.common.StatusEnum;
-import com.example.demo.service.member.AccountService;
 import com.example.demo.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,13 +21,7 @@ import java.util.List;
 public class QuestionRestController {
 
     @Autowired
-    private QuestionRepository questionRepository;
-
-    @Autowired
     private QuestionService questionService;
-
-    @Autowired
-    private AccountService accountService;
 
     @GetMapping({"/", ""})
     public ResponseEntity<Message> questionGetAll() {
@@ -142,7 +129,5 @@ public class QuestionRestController {
         }
 
         return new ResponseEntity<>(message, headers, httpStatus);
-
-
     }
 }

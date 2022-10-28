@@ -5,6 +5,7 @@ import com.example.demo.domain.member.Member;
 import com.example.demo.domain.question.Question;
 import lombok.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public class QuestionResponseDTO {
     private Date modify_date;
 
     private Long author_id;
+
+    private Integer vote_count;
 
     public Question toEntity(Set<Answer> answer, Member member, Set<Member> voter) {
         return Question.builder()

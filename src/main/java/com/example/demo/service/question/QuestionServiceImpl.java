@@ -1,9 +1,6 @@
 package com.example.demo.service.question;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 import com.auth0.jwt.JWT;
@@ -130,6 +127,7 @@ public class QuestionServiceImpl implements QuestionService{
 			questionResponseDTO.setCreate_date(q.getCreate_date());
 			questionResponseDTO.setModify_date(q.getModify_date());
 			questionResponseDTO.setAuthor_id(q.getMember().getId());
+			questionResponseDTO.setVote_count(q.getVoter().size());
 			questionResponseDtoList.add(questionResponseDTO);
 		}
 
@@ -149,6 +147,7 @@ public class QuestionServiceImpl implements QuestionService{
 		questionResponseDto.setCreate_date(question.getCreate_date());
 		questionResponseDto.setModify_date(question.getModify_date());
 		questionResponseDto.setAuthor_id(question.getMember().getId());
+		questionResponseDto.setVote_count(question.getVoter().size());
 
 		return questionResponseDto;
 	}
@@ -165,6 +164,7 @@ public class QuestionServiceImpl implements QuestionService{
 		questionDto.setMember(member);
 		questionDto.setCreate_date(new Date());
 		questionDto.setModify_date(new Date());
+		questionDto.setVoter(Collections.emptySet());
 		Question savedQuestion = questionRepository.save(questionDto.toEntity());
 		QuestionResponseDTO questionResponseDto = savedQuestion.toResponseDto();
 
@@ -193,6 +193,7 @@ public class QuestionServiceImpl implements QuestionService{
 			questionResponseDto.setCreate_date(question.getCreate_date());
 			questionResponseDto.setModify_date(new Date());
 			questionResponseDto.setAuthor_id(question.getMember().getId());
+			questionResponseDto.setVote_count(question.getVoter().size());
 
 			questionRepository.save(questionResponseDto.toEntity(question.getAnswer(), question.getMember(), question.getVoter()));
 		} else {
