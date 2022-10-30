@@ -2,6 +2,7 @@ package com.example.demo.domain.answer;
 
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.question.Question;
+import com.example.demo.rest.response.AnswerResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +56,18 @@ public class Answer {
                 .question(question)
                 .member(member)
                 .voter(voter)
+                .build();
+    }
+
+    public AnswerResponseDTO toResponseDto() {
+        return AnswerResponseDTO.builder()
+                .id(id)
+                .content(content)
+                .question_id(question.getId())
+                .author_id(member.getId())
+                .vote_count(voter.size())
+                .create_date(create_date)
+                .modify_date(modify_date)
                 .build();
     }
 }

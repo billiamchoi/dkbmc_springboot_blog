@@ -166,9 +166,8 @@ public class QuestionServiceImpl implements QuestionService{
 		questionDto.setModify_date(new Date());
 		questionDto.setVoter(Collections.emptySet());
 		Question savedQuestion = questionRepository.save(questionDto.toEntity());
-		QuestionResponseDTO questionResponseDto = savedQuestion.toResponseDto();
 
-		return questionResponseDto;
+		return savedQuestion.toResponseDto();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.example.demo.rest.controller;
 
+import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.domain.question.QuestionDTO;
 import com.example.demo.rest.response.AnswerResponseDTO;
 import com.example.demo.rest.response.QuestionResponseDTO;
@@ -138,7 +139,7 @@ public class QuestionRestController {
 
     // 질문 id로 답변 조회
     @GetMapping("/{id}/answer")
-    public ResponseEntity<Message> answerGetAllByQuestionId(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
+    public ResponseEntity<Message> answerGetAllByQuestionId(@PathVariable Long id) {
         //401 error exception 만들어야됨
         List<AnswerResponseDTO> answerResponseDtoList = answerService.restGetAllByQuestionId(id);
 
@@ -151,6 +152,23 @@ public class QuestionRestController {
         message.setData(answerResponseDtoList);
 
         return new ResponseEntity<>(message, headers,HttpStatus.OK);
+    }
 
+    // 질문 id로 답변 생성
+    // 답변은 항상 질문에 속해 있기 때문
+    @PostMapping({"/{id}/answer", "/{id}/answer/"})
+    public ResponseEntity<Message> answerCreateByQuestionId(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id, @RequestBody AnswerDTO answerDto) {
+
+        AnswerResponseDTO answerResponseDto = answerService.restCreateByQuestionId(jwtToken, id, answerDto);
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        message.setStatus(StatusEnum.CREATED);
+        message.setMessage("success");
+        message.setData(answerResponseDto);
+
+        return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }
 }

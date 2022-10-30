@@ -32,4 +32,7 @@ public interface AnswerService {
 
     // 질문 id로 답변 목록 조회 api
     List<AnswerResponseDTO> restGetAllByQuestionId(Long QuestionId);
+
+    // 질문 id로 해당 질문에 속한 답변 생성 api
+    AnswerResponseDTO restCreateByQuestionId(String jwtToken, Long QuestionId, AnswerDTO answerDto);
 }

@@ -1,5 +1,8 @@
 package com.example.demo.service.answer;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.demo.config.jwt.JwtProperties;
 import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.answer.AnswerDTO;
 import com.example.demo.domain.member.Member;
@@ -12,10 +15,7 @@ import com.example.demo.rest.response.AnswerResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -126,8 +126,30 @@ public class AnswerServiceImpl implements AnswerService {
             answerResponseDto.setQuestion_id(a.getQuestion().getId());
             answerResponseDto.setAuthor_id(a.getMember().getId());
             answerResponseDto.setVote_count(a.getVoter().size());
+            answerResponseDto.setCreate_date(a.getCreate_date());
+            answerResponseDto.setModify_date(a.getModify_date());
             answerResponseDtoList.add(answerResponseDto);
         }
         return answerResponseDtoList;
+    }
+
+    @Override
+    public AnswerResponseDTO restCreateByQuestionId(String jwtToken, Long questionId, AnswerDTO answerDto) {
+
+        String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+                .getClaim("username").asString();
+
+        Member member = memberRepository.findByUsername(username).get();
+        Question question = questionRepository.findById(questionId).get();
+
+        answerDto.setMember(member);
+        answerDto.setQuestion(question);
+        answerDto.setVoter(Collections.emptySet());
+        answerDto.setCreate_date(new Date());
+        answerDto.setModify_date(new Date());
+        Answer savedAnswer = answerRepository.save(answerDto.toEntity());
+
+        return savedAnswer.toResponseDto();
     }
 }
