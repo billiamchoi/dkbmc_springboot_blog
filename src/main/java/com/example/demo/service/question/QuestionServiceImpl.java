@@ -209,7 +209,6 @@ public class QuestionServiceImpl implements QuestionService{
 		String message = null;
 
 		Question question = questionRepository.findById(id).get();
-		QuestionResponseDTO questionResponseDto = new QuestionResponseDTO();
 
 		String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
 		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)

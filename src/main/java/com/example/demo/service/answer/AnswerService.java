@@ -40,4 +40,6 @@ public interface AnswerService {
 
     // 답변 변경 api
     AnswerResponseDTO restModify(String jwtToken, Long questionId, Long answerId, AnswerDTO answerDto);
+
+    String restRemove(String jwtToken, Long answerId);
 }

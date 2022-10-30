@@ -172,6 +172,7 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }
 
+    // 답변 수정 api
     @PutMapping("/{questionId}/answer/{answerId}")
     public ResponseEntity<Message> answerModify(@RequestHeader("Authorization") String jwtToken, @PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerDTO answerDto) {
 
@@ -199,4 +200,33 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, httpStatus);
     }
 
+    // 답변 삭제 api controller
+    @DeleteMapping("/{questionId}/answer/{answerId}")
+    public ResponseEntity<Message> answerRemove(@RequestHeader("Authorization") String jwtToken, @PathVariable Long questionId, @PathVariable Long answerId) {
+
+        HttpStatus httpStatus = null;
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        String messageText = answerService.restRemove(jwtToken, answerId);
+
+
+        if (messageText.equals("success")) {
+
+            message.setStatus(StatusEnum.OK);
+            message.setMessage(messageText);
+            message.setData(null);
+            httpStatus = HttpStatus.OK;
+        } else {
+
+            message.setStatus(StatusEnum.UNAUTHORIZED);
+            message.setMessage(messageText);
+            message.setData(null);
+            httpStatus = HttpStatus.UNAUTHORIZED;
+        }
+
+        return new ResponseEntity<>(message, headers, httpStatus);
+    }
 }

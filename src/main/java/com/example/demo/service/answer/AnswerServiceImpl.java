@@ -181,7 +181,36 @@ public class AnswerServiceImpl implements AnswerService {
         } else {
             answerResponseDto = null;
         }
-        
+
         return answerResponseDto;
+    }
+
+    @Override
+    public String restRemove(String jwtToken, Long answerId) {
+
+        String message = null;
+
+        Answer answer = answerRepository.findById(answerId).get();
+
+        String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+                .getClaim("username").asString();
+
+        Long memberId = memberRepository.findByUsername(username).get().getId();
+
+        Long authorId = answer.getMember().getId();
+
+        if (memberId.equals(authorId)) {
+            // api 요청자의 id와 글쓴이의 id가 같다면
+            answerRepository.deleteById(answerId);
+
+            message = "success";
+        } else {
+            //다르면 401에러
+            message = "fail : unauthorized";
+        }
+
+
+        return message;
     }
 }
