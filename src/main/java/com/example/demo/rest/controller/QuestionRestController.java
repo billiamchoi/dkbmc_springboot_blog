@@ -171,4 +171,32 @@ public class QuestionRestController {
 
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{questionId}/answer/{answerId}")
+    public ResponseEntity<Message> answerModify(@RequestHeader("Authorization") String jwtToken, @PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerDTO answerDto) {
+
+        HttpStatus httpStatus = null;
+
+        AnswerResponseDTO answerResponseDto = answerService.restModify(jwtToken, questionId, answerId, answerDto);
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        if (answerResponseDto == null) {
+            message.setStatus(StatusEnum.UNAUTHORIZED);
+            message.setMessage("fail : unauthorized");
+            message.setData(null);
+            httpStatus = HttpStatus.UNAUTHORIZED;
+
+        } else {
+            message.setStatus(StatusEnum.OK);
+            message.setMessage("success");
+            message.setData(answerResponseDto);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(message, headers, httpStatus);
+    }
+
 }

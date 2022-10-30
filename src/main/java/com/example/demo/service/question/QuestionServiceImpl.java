@@ -181,7 +181,6 @@ public class QuestionServiceImpl implements QuestionService{
 				.getClaim("username").asString();
 
 		Long memberId = memberRepository.findByUsername(username).get().getId();
-
 		Long authorId = question.getMember().getId();
 
 		if (memberId.equals(authorId)) {

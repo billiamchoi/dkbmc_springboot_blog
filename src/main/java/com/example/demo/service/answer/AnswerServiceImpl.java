@@ -12,6 +12,7 @@ import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.rest.response.AnswerResponseDTO;
+import com.example.demo.rest.response.QuestionResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -151,5 +152,36 @@ public class AnswerServiceImpl implements AnswerService {
         Answer savedAnswer = answerRepository.save(answerDto.toEntity());
 
         return savedAnswer.toResponseDto();
+    }
+
+    @Override
+    public AnswerResponseDTO restModify(String jwtToken, Long questionId, Long answerId, AnswerDTO answerDto) {
+
+        Answer answer = answerRepository.findById(answerId).get();
+        AnswerResponseDTO answerResponseDto = new AnswerResponseDTO();
+
+        String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+                .getClaim("username").asString();
+
+        Long memberId = memberRepository.findByUsername(username).get().getId();
+        Long authorId = answer.getMember().getId();
+
+        if (memberId.equals(authorId)) {
+            // api 요청자의 id와 글쓴이 id가 같다면
+            answerResponseDto.setId(answerId);
+            answerResponseDto.setContent(answerDto.getContent());
+            answerResponseDto.setAuthor_id(answer.getMember().getId());
+            answerResponseDto.setVote_count(answer.getVoter().size());
+            answerResponseDto.setQuestion_id(questionId);
+            answerResponseDto.setCreate_date(answer.getCreate_date());
+            answerResponseDto.setModify_date(new Date());
+
+            answerRepository.save(answerResponseDto.toEntity(answer.getQuestion(), answer.getMember(), answer.getVoter()));
+        } else {
+            answerResponseDto = null;
+        }
+        
+        return answerResponseDto;
     }
 }

@@ -34,5 +34,10 @@ public interface AnswerService {
     List<AnswerResponseDTO> restGetAllByQuestionId(Long QuestionId);
 
     // 질문 id로 해당 질문에 속한 답변 생성 api
-    AnswerResponseDTO restCreateByQuestionId(String jwtToken, Long QuestionId, AnswerDTO answerDto);
+    AnswerResponseDTO restCreateByQuestionId(String jwtToken, Long questionId, AnswerDTO answerDto);
+
+    //.restModify(jwtToken, questionId, answerId, answerDto);
+
+    // 답변 변경 api
+    AnswerResponseDTO restModify(String jwtToken, Long questionId, Long answerId, AnswerDTO answerDto);
 }
