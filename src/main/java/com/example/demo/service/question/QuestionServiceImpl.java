@@ -35,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService{
 	// toDtoList()를 사용하여 Page<QuestionDTO> 형태로 반환함
 	@Override
 	public Page<QuestionDTO> list(Pageable pageable) {
-		Page<Question> questionList = questionRepository.findAllByOrderByIdAsc(pageable);
+		Page<Question> questionList = questionRepository.findAllByOrderByIdDesc(pageable);
 		Page<QuestionDTO> questionDtoList = new  PageDTO().toDtoList(questionList);
 		return questionDtoList;
 	}
@@ -46,7 +46,7 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public Page<QuestionDTO> searchList(String searchKeyword, Pageable pageable) {
 
-		Page<Question> questionSearchList = questionRepository.findBySubjectContainingOrContentContainingOrderById(searchKeyword, searchKeyword, pageable);
+		Page<Question> questionSearchList = questionRepository.findBySubjectContainingOrContentContainingOrderByIdDesc(searchKeyword, searchKeyword, pageable);
 
 		Page<QuestionDTO> questionDtoSearchList = new  PageDTO().toDtoList(questionSearchList);
 		return questionDtoSearchList;
