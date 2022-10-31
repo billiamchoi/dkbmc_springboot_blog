@@ -102,7 +102,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
 
-    // 특정 답변 조회
+    // 특정 답변 조회 서비스
     // controller로부터 id를 받아 특정 답변 조회 후 Repository까지 넘겨줌
     // 해당 AnswerDTO를 반환
     @Override
@@ -115,9 +115,13 @@ public class AnswerServiceImpl implements AnswerService {
         return answerDto;
     }
 
+    // 질문 id에 속한 답변 목록 조회 api 서비스
+    // controller로부터 질문 id를 받아 answerRepository까지 넘겨줌
+    // answerList를 answerRepository에서 받아 answerResponseDtoList에 for loop으로 set후
+    // answerResponseDtoList를 반환
     @Override
-    public List<AnswerResponseDTO> restGetAllByQuestionId(Long QuestionId) {
-        List<Answer> answerList = answerRepository.findAnswerByQuestionIdOrderById(QuestionId);
+    public List<AnswerResponseDTO> restGetAllByQuestionId(Long id) {
+        List<Answer> answerList = answerRepository.findAnswerByQuestionIdOrderById(id);
         List<AnswerResponseDTO> answerResponseDtoList = new ArrayList<AnswerResponseDTO>();
 
         for (Answer a : answerList ) {
@@ -134,6 +138,12 @@ public class AnswerServiceImpl implements AnswerService {
         return answerResponseDtoList;
     }
 
+    // 질문 id에 속한 답변 생성 api 서비스
+    // controller로부터 jwt token,  질문id, answerDto를 받아와
+    // jwt token에 암호화된 username를 String 타입의 username으로 초기화
+    // answerDto에 필요한 member, question, voter, create_date, modify_date를 set함
+    // answerRepository.save()로 답변을 저장하고
+    // 저장된 값을 AnswerResponseDTO 객체 형태로 반환함
     @Override
     public AnswerResponseDTO restCreateByQuestionId(String jwtToken, Long questionId, AnswerDTO answerDto) {
 
@@ -154,6 +164,18 @@ public class AnswerServiceImpl implements AnswerService {
         return savedAnswer.toResponseDto();
     }
 
+    // 질문 id에 속한 답변 수정 api 서비스
+    // jwt token에 암호화된 username를 String 타입의 username으로 초기화
+    // username으로 조회한 사용자 id를 memberId라 하고
+    // 수정하는 답변의 글쓴이 id를 authorId라 할때
+    // equals 함수를 사용하여 memberId라 authorId가 같다면
+    //      answerResponseDto에 필요한 정보를 set하고
+    //      answerRepository.save()를 통해 수정된 사항을 저장
+    //      이때 답변이 속한 Question 객체, 답변 글쓴이의 Member 객체, 답변을 추천한 Memeber의 집합을
+    //      함수 toEntity argument 넘겨줌
+    // memberId와 authorId가 다르다면
+    //      answerResponseDto에 null을 초기화하여 controller에서 분기하여
+    //      http status code 401 UNAUTHORIZED를 반환하도록 함
     @Override
     public AnswerResponseDTO restModify(String jwtToken, Long questionId, Long answerId, AnswerDTO answerDto) {
 
@@ -185,11 +207,20 @@ public class AnswerServiceImpl implements AnswerService {
         return answerResponseDto;
     }
 
+    // 질문 id에 속한 답변 삭제 api 서비스
+    // jwt token에 암호화된 username를 String 타입의 username으로 초기화
+    // username으로 조회한 사용자 id를 memberId라 하고
+    // 삭제하는 답변의 글쓴이 id를 authorId라 할때
+    // equals 함수를 사용하여 memberId와 authorId가 같다면
+    //     answerRepository.deleteById(answerId)로
+    //     controller에서 받은 answerId로 답변 삭제
+    //     message에 "success"를 초기화하여 반환
+    // memberId와 authorId가 다르다면
+    //      message에 "fail : unauthorized"를 초기화하여 반환
     @Override
     public String restRemove(String jwtToken, Long answerId) {
 
         String message = null;
-
         Answer answer = answerRepository.findById(answerId).get();
 
         String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
@@ -197,7 +228,6 @@ public class AnswerServiceImpl implements AnswerService {
                 .getClaim("username").asString();
 
         Long memberId = memberRepository.findByUsername(username).get().getId();
-
         Long authorId = answer.getMember().getId();
 
         if (memberId.equals(authorId)) {
@@ -210,20 +240,24 @@ public class AnswerServiceImpl implements AnswerService {
             message = "fail : unauthorized";
         }
 
-
         return message;
     }
 
+    // 답변 추천 api 서비스
+    // jwt token에 암호화된 username를 String 타입의 username으로 초기화
+    // username으로 findByUsername함수로 member entity를 조회하여
+    // member 객체로 초기화
+    // answerDto.getVoter().add(member)로 멤버 객체를 answerDto에 추가
+    // save로 answerDto를 저장
+    // Answer 객체를 toResponseDto()로 AnswerResponseDTO로 변환해서 반환
     @Override
     public AnswerResponseDTO restVote(String jwtToken, AnswerDTO answerDto) {
 
-        // 먼가 여기서 jwtToken 없는 비 회원 분기 해야 할 것 같은...
         String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
         String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
                 .getClaim("username").asString();
 
         Member member = memberRepository.findByUsername(username).get();
-
         answerDto.getVoter().add(member);
         Answer savedAnswer = answerRepository.save(answerDto.toEntity());
 

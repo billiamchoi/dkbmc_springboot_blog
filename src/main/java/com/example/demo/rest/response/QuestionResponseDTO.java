@@ -40,7 +40,8 @@ public class QuestionResponseDTO {
     // toEntity parameter로
     // 질문에 속한 답변을 Set<Answer> 객체를 answer
     // 질문을 작성한 글쓴이 Member 객체를 member
-    // 질문을 추천한 회원의 집합 Set<Member> 객체를 voter를 설정
+    // 질문을
+    // 추천한 회원의 집합 Set<Member> 객체를 voter를 설정
     public Question toEntity(Set<Answer> answer, Member member, Set<Member> voter) {
         return Question.builder()
                 .id(id)

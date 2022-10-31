@@ -85,6 +85,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+        // response body에 키 "access_token"에 값 jwtToken으로 보여주도록 설정
         response.getWriter().write(
                 "{\"" + "access_token" + "\":\"" + JwtProperties.TOKEN_PREFIX+jwtToken + "\"}"
         );

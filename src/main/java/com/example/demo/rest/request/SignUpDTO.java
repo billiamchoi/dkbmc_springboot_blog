@@ -15,7 +15,8 @@ public class SignUpDTO {
     private String password_confirm;
 
     // controller에서 SignUpDTO를 memberDTO로 변활할때 사용하는 함수
-    public MemberDTO toMemberDto(){
+    public MemberDTO toMemberDto() {
+
         return MemberDTO.builder()
                 .username(username)
                 .email(email)

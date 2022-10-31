@@ -2,12 +2,10 @@ package com.example.demo.service.question;
 
 import java.util.*;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.config.jwt.JwtProperties;
 import com.example.demo.domain.PageDTO;
-import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.question.Question;
@@ -52,6 +50,10 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionDtoSearchList;
 	}
 
+	// 질문 생성 서비스
+	// controller로부터 질문 객체, 글쓴이id를 받아 Repository까지 넘겨줌
+	// repositoy에서 나온 결과값은 Optional이기때문에 .get()을 통해 Entity로 변환하여
+	// 전체적인 Set을 하고 save()로 저장함
 	@Override
 	public void create(QuestionDTO questionDto, Long authorId) {
 
@@ -63,10 +65,10 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(question);
 	}
 
-	// 질문 생성 서비스
+	// 질문 수정 서비스
 	// controller로부터 질문 객체, 글쓴이id를 받아 Repository까지 넘겨줌
-	// repositoy에서 나온 결과값은 Optional이기때문에 .get()을 통해 Entity로 변환하여
-	// 전체적인 Set을 하고 save()로 저장함
+	// questionDto에 필요한 voter, member, creat_date, modifydate set하고
+	// save()로 수정사항 저장함
 	@Override
 	public void modify(QuestionDTO questionDto, Long authorId) {
 
@@ -114,6 +116,9 @@ public class QuestionServiceImpl implements QuestionService{
 		this.questionRepository.save(questionDto.toEntity());
 	}
 
+	// 질문 목록 조회 api 서비스
+	// questionList를 questionRepository에서 받아 questionResponseDtoList에 for loop으로 set후
+	// questionResponseDtoList를 반환
 	@Override
 	public List<QuestionResponseDTO> restGetAll() {
 
@@ -135,6 +140,10 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionResponseDtoList;
 	}
 
+	// 특정 질문 조회 api 서비스
+	// controller부터 id를 받아
+	// question questionRepository에서 id로 조회후 questionResponseDto에 필요 데이터 set후
+	// questionResponseDto 반환
 	@Override
 	public QuestionResponseDTO restGetOne(Long id) {
 
@@ -153,6 +162,12 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionResponseDto;
 	}
 
+	// 질문 생성 api 서비스
+	// controller로부터 jwt token, questionDto 받아와
+	// jwt token에 암호화된 username를 String 타입의 username으로 초기화
+	// questionDto에 필요한 member, voter, create_date, modify_date를 set함
+	// questionRepository.save()로 질문을 저장하고
+	// 저장된 값을 QuestionResponseDTO 객체 형태로 반환함
 	@Override
 	public QuestionResponseDTO restCreate(String jwtToken, QuestionDTO questionDto) {
 
@@ -163,14 +178,26 @@ public class QuestionServiceImpl implements QuestionService{
 		Member member = memberRepository.findByUsername(username).get();
 
 		questionDto.setMember(member);
+		questionDto.setVoter(Collections.emptySet());
 		questionDto.setCreate_date(new Date());
 		questionDto.setModify_date(new Date());
-		questionDto.setVoter(Collections.emptySet());
 		Question savedQuestion = questionRepository.save(questionDto.toEntity());
 
 		return savedQuestion.toResponseDto();
 	}
 
+	// 질문 수정 api 서비스
+	// jwt token에 암호화된 username를 String 타입의 username으로 초기화
+	// username으로 조회한 사용자 id를 memberId라 하고
+	// 수정하는 질문의 글쓴이 id를 authorId라 할때
+	// equals 함수를 사용하여 memberId라 authorId가 같다면
+	//      questionResponseDto에 필요한 정보를 set하고
+	//      questionRepository.save()를 통해 수정된 사항을 저장
+	//      이때  질문에 답변의 집합, 질문 글쓴이의 Member 객체, 답변을 추천한 Memeber의 집합을
+	//      함수 toEntity argument 넘겨줌
+	// memberId와 authorId가 다르다면
+	//      questionResponseDto에 null을 초기화하여 controller에서 분기하여
+	//      http status code 401 UNAUTHORIZED를 반환하도록 함
 	@Override
 	public QuestionResponseDTO restModify(String jwtToken, Long id, QuestionDTO questionDto) {
 
@@ -204,6 +231,16 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionResponseDto;
 	}
 
+	// 질문 삭제 api 서비스
+	// jwt token에 암호화된 username를 String 타입의 username으로 초기화
+	// username으로 조회한 사용자 id를 memberId라 하고
+	// 삭제하는 질문의 글쓴이 id를 authorId라 할때
+	// equals 함수를 사용하여 memberId와 authorId가 같다면
+	//     questionRepository.deleteById(id)로
+	//     controller에서  받은 id로 답변 삭제
+	//     message에 "success"를 초기화하여 반환
+	// memberId와 authorId가 다르다면
+	//      message에 "fail : unauthorized"를 초기화하여 반환
 	@Override
 	public String restRemove(String jwtToken, Long id) {
 
@@ -229,14 +266,19 @@ public class QuestionServiceImpl implements QuestionService{
 			message = "fail : unauthorized";
 		}
 
-
 		return message;
 	}
 
+	// 질문 추천 api 서비스
+	// jwt token에 암호화된 username를 String 타입의 username으로 초기화
+	// username으로 findByUsername함수로 member entity를 조회하여
+	// member 객체로 초기화
+	// answerDto.getVoter().add(member)로 멤버 객체를 questionDto에 추가
+	// save로 questionDto를 저장
+	// Question 객체를 toResponseDto()로 QuestionResponseDTO로 변환해서 반환
 	@Override
 	public QuestionResponseDTO restVote(String jwtToken, QuestionDTO questionDto) {
 
-		// 먼가 여기서 jwtToken 없는 비 회원 분기 해야 할 것 같은...
 		String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
 		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
 				.getClaim("username").asString();
@@ -248,6 +290,4 @@ public class QuestionServiceImpl implements QuestionService{
 
 		return savedQuestion.toResponseDto();
 	}
-
-
 }
