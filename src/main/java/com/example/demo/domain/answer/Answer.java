@@ -59,6 +59,9 @@ public class Answer {
                 .build();
     }
 
+    // Entity 객체 -> ResponseDTO 객체 전환시 사용
+    // api를 통해 답변 생성 및 답변 추천시 사용
+    // serviceImpl에서 사용
     public AnswerResponseDTO toResponseDto() {
         return AnswerResponseDTO.builder()
                 .id(id)

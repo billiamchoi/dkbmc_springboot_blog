@@ -18,9 +18,9 @@ public class QuestionResponseDTO {
 
     private Long id;
 
-    private String content;
-
     private String subject;
+
+    private String content;
 
     private Long author_id;
 
