@@ -64,6 +64,7 @@ public class SecurityConfig  {
                 .addFilter(jwtAuthorizationFilter())
                 .authorizeRequests()
                 .antMatchers("/api/v1/account/signup").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/question/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .build();
