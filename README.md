@@ -31,7 +31,7 @@ Set username, password, and url according to your database environment in applic
 
 ### Creating an Executable jar File
 
-Use the following command to delete the contenexcutat of the build directory.
+Use the following command to delete the content of the build directory.
 
 ```
 > gradlew clean
