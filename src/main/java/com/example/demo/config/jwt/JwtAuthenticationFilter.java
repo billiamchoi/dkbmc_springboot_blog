@@ -67,7 +67,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 결론은 인증 프로바이더에게 알려줄 필요가 없음.
         Authentication authentication =
                 authenticationManager.authenticate(authenticationToken);
-        System.out.println("여기가 어스 프린스펍ㄹ?" + authentication.getPrincipal());
 //        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 //        System.out.println("Authentication : "+principalDetails.getUser().getUsername());
         return authentication;
@@ -88,6 +87,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+        response.getWriter().write(
+                "{\"" + "access_token" + "\":\"" + JwtProperties.TOKEN_PREFIX+jwtToken + "\"}"
+        );
     }
 
 }
