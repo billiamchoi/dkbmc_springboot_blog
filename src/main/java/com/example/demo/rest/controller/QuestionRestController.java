@@ -230,7 +230,7 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, httpStatus);
     }
 
-    @GetMapping("/vote/{id}")
+    @PostMapping("/vote/{id}")
     public ResponseEntity<Message> questionVote(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
 
         QuestionDTO questionDto = questionService.get(id);

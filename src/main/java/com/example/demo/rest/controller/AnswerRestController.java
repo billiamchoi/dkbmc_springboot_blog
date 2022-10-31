@@ -21,7 +21,7 @@ public class AnswerRestController {
     @Autowired
     AnswerService answerService;
 
-    @GetMapping("/vote/{id}")
+    @PostMapping("/vote/{id}")
     public ResponseEntity<Message> answerVote(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
 
         AnswerDTO answerDto = answerService.get(id);
