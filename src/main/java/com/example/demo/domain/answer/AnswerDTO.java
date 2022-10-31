@@ -44,7 +44,8 @@ public class AnswerDTO {
     // listByQuestion()과 같이 여러개의 레코드를 데이터베이스에서 조회하여 front까지 렌더링할때 사용
     // serviceImpl에서 사용
     public List<AnswerDTO> toDtoList(List<Answer> answerList) {
-        List<AnswerDTO> answerDTOList = answerList.stream().map(m -> AnswerDTO.builder()
+
+        return answerList.stream().map(m -> AnswerDTO.builder()
                 .id(m.getId())
                 .content(m.getContent())
                 .create_date(m.getCreate_date())
@@ -54,8 +55,6 @@ public class AnswerDTO {
                 .voter(m.getVoter())
                 .build())
                 .toList();
-
-        return answerDTOList;
     }
 
 }
