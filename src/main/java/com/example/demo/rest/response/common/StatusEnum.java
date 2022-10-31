@@ -1,5 +1,6 @@
 package com.example.demo.rest.response.common;
 
+//http status code에 따라 response body "status"에 표시할 String을 enum 객체로 만듬
 public enum StatusEnum {
 
     OK(200, "OK"),
