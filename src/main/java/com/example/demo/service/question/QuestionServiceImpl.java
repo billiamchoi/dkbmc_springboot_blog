@@ -7,6 +7,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.config.jwt.JwtProperties;
 import com.example.demo.domain.PageDTO;
+import com.example.demo.domain.answer.Answer;
 import com.example.demo.domain.member.Member;
 import com.example.demo.domain.member.MemberDTO;
 import com.example.demo.domain.question.Question;
@@ -230,6 +231,22 @@ public class QuestionServiceImpl implements QuestionService{
 
 
 		return message;
+	}
+
+	@Override
+	public QuestionResponseDTO restVote(String jwtToken, QuestionDTO questionDto) {
+
+		// 먼가 여기서 jwtToken 없는 비 회원 분기 해야 할 것 같은...
+		String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+				.getClaim("username").asString();
+
+		Member member = memberRepository.findByUsername(username).get();
+
+		questionDto.getVoter().add(member);
+		Question savedQuestion = questionRepository.save(questionDto.toEntity());
+
+		return savedQuestion.toResponseDto();
 	}
 
 

@@ -42,4 +42,6 @@ public interface AnswerService {
     AnswerResponseDTO restModify(String jwtToken, Long questionId, Long answerId, AnswerDTO answerDto);
 
     String restRemove(String jwtToken, Long answerId);
+
+    AnswerResponseDTO restVote(String jwtToken, AnswerDTO answerDto);
 }

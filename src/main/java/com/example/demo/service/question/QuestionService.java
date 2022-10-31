@@ -52,4 +52,7 @@ public interface QuestionService {
 
 	// 질문 삭제 api
 	String restRemove(String jwtToken, Long id);
+
+	// 질문 추천 api
+	QuestionResponseDTO restVote(String jwtToken, QuestionDTO questionDto);
 }

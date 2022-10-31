@@ -229,4 +229,21 @@ public class QuestionRestController {
 
         return new ResponseEntity<>(message, headers, httpStatus);
     }
+
+    @GetMapping("/vote/{id}")
+    public ResponseEntity<Message> questionVote(@RequestHeader("Authorization") String jwtToken, @PathVariable Long id) {
+
+        QuestionDTO questionDto = questionService.get(id);
+        QuestionResponseDTO questionResponseDto = questionService.restVote(jwtToken, questionDto);
+
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        message.setStatus(StatusEnum.OK);
+        message.setMessage("success");
+        message.setData(questionResponseDto);
+
+        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+    }
 }

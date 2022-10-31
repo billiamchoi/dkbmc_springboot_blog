@@ -213,4 +213,20 @@ public class AnswerServiceImpl implements AnswerService {
 
         return message;
     }
+
+    @Override
+    public AnswerResponseDTO restVote(String jwtToken, AnswerDTO answerDto) {
+
+        // 먼가 여기서 jwtToken 없는 비 회원 분기 해야 할 것 같은...
+        String token = jwtToken.replace(JwtProperties.TOKEN_PREFIX, "");
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+                .getClaim("username").asString();
+
+        Member member = memberRepository.findByUsername(username).get();
+
+        answerDto.getVoter().add(member);
+        Answer savedAnswer = answerRepository.save(answerDto.toEntity());
+
+        return savedAnswer.toResponseDto();
+    }
 }
