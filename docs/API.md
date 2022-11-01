@@ -53,7 +53,7 @@ POST
 
 
 ```json
-     {
+    {
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
@@ -63,7 +63,7 @@ POST
             "password1": "<해쉬된 비밀번호>",
             "password2": "<해쉬된 비밀번호 확인>"
         }
-     }
+    }
 ``` 
 
 
@@ -101,9 +101,9 @@ POST
 | 200                   |  OK       | 
 
 ```json
-{
-    "access_token": "<JWT 토큰>"
-}
+    {
+        "access_token": "<JWT 토큰>"
+    }
 ``` 
 
 
@@ -135,19 +135,19 @@ POST
 | 201                   |  CREATED  | 
 
 ```json
-     {
+    {
         "status": "<상태메세지>",
         "message": "<메세지>",
         "data": {
-                    "id":          "<질문 id>",
-                    "subject":     "<질문 제목>",
-                    "content":     "<질문 내용>",
-                    "author_id":   "<글쓴이 id>",
-                    "vote_count":  "<질문 추천 수>",
-                    "create_date": "<질문 생성일시>",
-                    "modify_date": "<질문 수정일시>"
+            "id":          "<질문 id>",
+            "subject":     "<질문 제목>",
+            "content":     "<질문 내용>",
+            "author_id":   "<글쓴이 id>",
+            "vote_count":  "<질문 추천 수>",
+            "create_date": "<질문 생성일시>",
+            "modify_date": "<질문 수정일시>"
         }
-     }
+    }
 ``` 
 
 Vote Question
@@ -170,7 +170,7 @@ POST
 | 200                   |  OK       | 
 
 ```json
-     {
+    {
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
@@ -183,7 +183,7 @@ POST
             "create_date": "<질문 생성일시>",
             "modify_date": "<질문 수정일시>"
         }
-     }
+    }
 ``` 
 
 
@@ -207,7 +207,7 @@ GET
 | 200                   |  OK       | 
 
 ```json
-     {
+    {
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": [
@@ -220,8 +220,8 @@ GET
                 "create_date": "<질문 생성일시>",
                 "modify_date": "<질문 수정일시>"
             },
-          ]
-     }
+        ]
+    }
 ``` 
 
 
@@ -245,19 +245,19 @@ GET
 | 200                   |  OK       | 
 
 ```json
-     {
+    {
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
-                    "id":          "<질문 id>",
-                    "subject":     "<질문 제목>",
-                    "content":     "<질문 내용>",
-                    "author_id":   "<글쓴이 id>",
-                    "vote_count":  "<질문 추천 수>",
-                    "create_date": "<질문 생성일시>",
-                    "modify_date": "<질문 수정일시>"
+            "id":          "<질문 id>",
+            "subject":     "<질문 제목>",
+            "content":     "<질문 내용>",
+            "author_id":   "<글쓴이 id>",
+            "vote_count":  "<질문 추천 수>",
+            "create_date": "<질문 생성일시>",
+            "modify_date": "<질문 수정일시>"
         }
-     }
+    }
 ``` 
 
 
@@ -289,19 +289,19 @@ PUT
 | 200                   |  OK       | 
 
 ```json
-     {
+    {
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
-                    "id":          "<질문 id>",
-                    "subject":     "<질문 제목>",
-                    "content":     "<질문 내용>",
-                    "author_id":   "<글쓴이 id>",
-                    "vote_count":  "<질문 추천 수>",
-                    "create_date": "<질문 생성일시>",
-                    "modify_date": "<질문 수정일시>"
+            "id":          "<질문 id>",
+            "subject":     "<질문 제목>",
+            "content":     "<질문 내용>",
+            "author_id":   "<글쓴이 id>",
+            "vote_count":  "<질문 추천 수>",
+            "create_date": "<질문 생성일시>",
+            "modify_date": "<질문 수정일시>"
         }
-     }
+    }
 ``` 
 
 
@@ -363,12 +363,12 @@ POST
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
-                    "id":          "<질문 id>",
-                    "content":     "<질문 내용>",
-                    "author_id":   "<글쓴이 id>",
-                    "vote_count":  "<질문 추천 수>",
-                    "create_date": "<질문 생성일시>",
-                    "modify_date": "<질문 수정일시>"
+            "id":          "<질문 id>",
+            "content":     "<질문 내용>",
+            "author_id":   "<글쓴이 id>",
+            "vote_count":  "<질문 추천 수>",
+            "create_date": "<질문 생성일시>",
+            "modify_date": "<질문 수정일시>"
         }
     }
 ``` 
@@ -394,19 +394,19 @@ POST
 | 200                   |  OK       | 
 
 ```json
-     {
-       "status":  "<상태메세지>",
-       "message": "<메세지>",
-       "data": {
-           "id":          "<답변 id>",
-           "content":     "<답변 내용>",
-           "question_id": "<답변이 속한 질문 id>",
-           "author_id":   "<답변 글쓴이의 id>",
-           "vote_count":  "<답변 추천 수>",
-           "create_date": "<답변 생성일시>",
-           "modify_date": "<답변 수정일시>"
-       }
-    }
+    {
+        "status":  "<상태메세지>",
+        "message": "<메세지>",
+        "data": {
+            "id":          "<답변 id>",
+            "content":     "<답변 내용>",
+            "question_id": "<답변이 속한 질문 id>",
+            "author_id":   "<답변 글쓴이의 id>",
+            "vote_count":  "<답변 추천 수>",
+            "create_date": "<답변 생성일시>",
+            "modify_date": "<답변 수정일시>"
+        }
+    }   
 ``` 
 
 Get Answers
@@ -441,7 +441,7 @@ GET
                 "create_date": "<질문 생성일시>",
                 "modify_date": "<질문 수정일시>"
             },
-          ]
+        ]
     }
 ``` 
 
@@ -475,12 +475,12 @@ POST
         "status":  "<상태메세지>",
         "message": "<메세지>",
         "data": {
-                    "id":          "<질문 id>",
-                    "content":     "<답변 내용>",
-                    "author_id":   "<글쓴이 id>",
-                    "vote_count":  "<질문 추천 수>",
-                    "create_date": "<질문 생성일시>",
-                    "modify_date": "<질문 수정일시>"
+            "id":          "<질문 id>",
+            "content":     "<답변 내용>",
+            "author_id":   "<글쓴이 id>",
+            "vote_count":  "<질문 추천 수>",
+            "create_date": "<질문 생성일시>",
+            "modify_date": "<질문 수정일시>"
         }
     }
 ``` 
