@@ -8,7 +8,7 @@ Member
 
 | Model    | Relation   | Description |
 |:---------|:-----------|:------------|
-| Question | `OneToMany` | Children   |
+| Question | `OneToMany`| Children    |
 | Answer   | `OneToMany`| Children    |
 
 
@@ -36,8 +36,8 @@ Question
 |-------------|---------------|-------------------------------|
 | subject     | `String`      | Subject of question           |
 | content     | `String`      | Content of question           |
-| create_date | `Date`        | created date of question      |
-| modify_date | `Date`        | modified date of question     |
+| create_date | `Date`        | Created date of question      |
+| modify_date | `Date`        | Modified date of question     |
 
 Answer
 ----
@@ -54,8 +54,8 @@ Answer
 | Column      | Type          | Description                   |
 |-------------|---------------|-------------------------------|
 | content     | `String`      | Content of answer             |
-| create_date | `Date`        | created date of answer        |
-| modify_date | `Date`        | modified date of answer       |
+| create_date | `Date`        | Created date of answer        |
+| modify_date | `Date`        | Modified date of answer       |
 
 Question_voter
 ----
@@ -72,8 +72,8 @@ Question_voter
 
 | Column      | Type          | Description                           |
 |-------------|---------------|---------------------------------------|
-| question_id | `Long`        | id of question voted by member        |
-| voter_id    | `Long`        | id of member who vote the question    |
+| question_id | `Long`        | Id of question voted by member        |
+| voter_id    | `Long`        | Id of member who vote the question    |
 
 
 Answer_voter
@@ -91,6 +91,6 @@ Answer_voter
 
 | Column      | Type          | Description                           |
 |-------------|---------------|---------------------------------------|
-| answer_id   | `Long`        | id of answer voted by member          |
-| voter_id    | `Long`        | id of member who vote the answer      |
+| answer_id   | `Long`        | Id of answer voted by member          |
+| voter_id    | `Long`        | Id of member who vote the answer      |
 
