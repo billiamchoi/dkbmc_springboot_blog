@@ -109,7 +109,7 @@ public class QuestionRestController {
     //      "content"  <질문 내용>
     // }
     // response json format :
-    // {
+    //{
     //    "status": <상태메세지>,
     //    "message": <메세지>,
     //    "data": {
@@ -232,7 +232,7 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, httpStatus);
     }
 
-    // 질문 id로 질문 조회를 담당하는 rest api controller
+    // 질문 id로 답변 조회를 담당하는 rest api controller
     // url: /api/v1/question/{id}/answer
     // method: GET
     // request path : 질문 id
@@ -244,7 +244,7 @@ public class QuestionRestController {
     //    "data": [
     //        {
     //            "id":          <질문 id>,
-    //            "content":     <질문 내용>,
+    //            "content":     <답변 내용>,
     //            "author_id":   <글쓴이 id>,
     //            "vote_count":  <질문 추천 수>,
     //            "create_date": <질문 생성일시>,
@@ -269,7 +269,7 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers,HttpStatus.OK);
     }
 
-    // 질문 생성 로직을 담당하는 rest api controller
+    // 답변 생성 로직을 담당하는 rest api controller
     // url: /api/v1/question/{id}/answer
     // method: POST
     // request path : 질문 id
@@ -283,7 +283,7 @@ public class QuestionRestController {
     //    "message": <메세지>,
     //    "data": {
     //                "id":          <질문 id>,
-    //                "content":     <질문 내용>,
+    //                "content":     <답변 내용>,
     //                "author_id":   <글쓴이 id>,
     //                "vote_count":  <질문 추천 수>,
     //                "create_date": <질문 생성일시>,
@@ -306,10 +306,10 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }
 
-    // 질문 수정 로직을 담당하는 rest api controller
+    // 답변 수정 로직을 담당하는 rest api controller
     // url: /api/v1/question/{questionId}/answer/{answerId}
     // method: PUT
-    // request path : 질문 id, 질문 id
+    // request path : 질문 id, 답변 id
     // request json format :
     // {
     //      "content"  <질문 내용>
@@ -320,7 +320,7 @@ public class QuestionRestController {
     //    "message": <메세지>,
     //    "data": {
     //                "id":          <질문 id>,
-    //                "content":     <질문 내용>,
+    //                "content":     <답변 내용>,
     //                "author_id":   <글쓴이 id>,
     //                "vote_count":  <질문 추천 수>,
     //                "create_date": <질문 생성일시>,
@@ -354,10 +354,10 @@ public class QuestionRestController {
         return new ResponseEntity<>(message, headers, httpStatus);
     }
 
-    // 질문 삭제 로직을 담당하는 rest api controller
+    // 답변 삭제 로직을 담당하는 rest api controller
     // url: /api/v1/question/{questionId}/answer/{answerId}
     // method: DELETE
-    // request path : 질문 id, 질문 id
+    // request path : 질문 id, 답변 id
     // request json format : 없음
     // response json format :
     // {
