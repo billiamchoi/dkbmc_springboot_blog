@@ -2,7 +2,6 @@ package com.example.demo.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.demo.config.auth.PrincipalDetails;
 import com.example.demo.rest.request.LoginRequestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +17,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-
-
     private final AuthenticationManager authenticationManager;
-
 
     // Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
     // 인증 요청시에 실행되는 함수 /login이라는데 확인필요
@@ -67,8 +62,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 결론은 인증 프로바이더에게 알려줄 필요가 없음.
         Authentication authentication =
                 authenticationManager.authenticate(authenticationToken);
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        System.out.println("Authentication : "+principalDetails.getUser().getUsername());
+
         return authentication;
     }
 
@@ -81,7 +75,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(authResult.getName())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
                 .withClaim("username", authResult.getName())
-                // PrincipalDetail이 안먹어서 지금 여기서 몇개를 안하고 했는데 수정이 필요함
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
