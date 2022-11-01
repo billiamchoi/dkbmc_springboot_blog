@@ -9,9 +9,6 @@ Member
 | Model    | Relation   | Description |
 |:---------|:-----------|:------------|
 | Question | `OneToMany` | Children   |
-
-| Model    | Relation   | Description |
-|:---------|:-----------|:------------|
 | Answer   | `OneToMany`| Children    |
 
 
@@ -65,12 +62,9 @@ Question_voter
 
 ### Relationship
 
-| Model | Relation    | Description |
-|:------|:------------|:------------|
-| Member| `OneToMany` | Parent      |  
-
 | Model   | Relation    | Description |
 |:--------|:------------|:------------|
+| Member  | `OneToMany` | Parent      |  
 | Question| `OneToMany` | Parent      |
 
 
@@ -87,13 +81,10 @@ Answer_voter
 
 ### Relationship
 
-| Model | Relation    | Description |
-|:------|:------------|:------------|
-| Member| `OneToMany` | Parent      |  
-
-| Model   | Relation    | Description |
-|:--------|:------------|:------------|
-| Answer  | `OneToMany` | Parent      |
+| Model | Relation      | Description |
+|:------|:--------------|:------------|
+| Member| `OneToMany`   | Parent      |  
+| Answer| `OneToMany`   | Parent      |
 
 
 ### Schema
