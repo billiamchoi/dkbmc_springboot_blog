@@ -20,8 +20,10 @@ public class Question {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
     private String subject;
 
     // Answer Entity와 OneToMany 매핑 (Question(1) : Answer(다)
@@ -40,8 +42,10 @@ public class Question {
     // 추천 기능을 위한 ManyToMany 매핑  (Question(다) : voter(다))
     @ManyToMany
     Set<Member> voter;
-
+    @Column(nullable = false)
     private Date create_date;
+    
+    @Column(nullable = false)
     private Date modify_date;
 
     // Etity 객체 -> DTO 객체 전환시 사용

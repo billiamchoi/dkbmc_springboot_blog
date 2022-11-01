@@ -24,6 +24,7 @@ public class Answer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String content;
 
     // Question Entity와 ManyToOne 매핑 (Answer(다) : Question(1))
@@ -40,8 +41,9 @@ public class Answer {
     @ManyToMany
     Set<Member> voter;
 
+    @Column(nullable = false)
     private Date create_date;
-
+    @Column(nullable = false)
     private Date modify_date;
 
     // Etity 객체 -> DTO 객체 전환시 사용
