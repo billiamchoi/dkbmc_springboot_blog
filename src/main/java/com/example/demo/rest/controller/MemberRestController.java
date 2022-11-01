@@ -29,7 +29,8 @@ public class MemberRestController {
     // url: /api/v1/account/signup
     // method: POST
     // request json format :
-    // {    "username":         <사용자아이디>,
+    // {
+    //      "username":         <사용자아이디>,
     //      "email":            <이메일>,
     //      "password":         <비밀번호>,
     //      "password_confirm": <비밀번호 확인>
@@ -51,7 +52,7 @@ public class MemberRestController {
 
         MemberDTO memberDto = signUpDto.toMemberDto();
         memberService.joinUser(memberDto);
-        MemberDTO retrievedMemberDto = accountService.get(memberDto.getUsername());
+        SignUpDTO retrievedSignUpDto = accountService.get(memberDto.getUsername()).toSignUpDto();
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
@@ -59,7 +60,7 @@ public class MemberRestController {
 
         message.setStatus(StatusEnum.CREATED);
         message.setMessage("success");
-        message.setData(retrievedMemberDto);
+        message.setData(retrievedSignUpDto);
 
         return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
     }

@@ -57,11 +57,11 @@ POST
         "status":  "<status message>",
         "message": "<message>",
         "data": {
-            "id":        "<member id>",
-            "username":  "<username>",
-            "email":     "<email>",
-            "password1": "<password>",
-            "password2": "<password_confirm>"
+            "id":               "<member id>",
+            "username":         "<username>",
+            "email":            "<email>",
+            "password":         "<password>",
+            "password_confirm": "<password_confirm>"
         }
     }
 ``` 

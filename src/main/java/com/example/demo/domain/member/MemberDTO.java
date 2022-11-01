@@ -1,4 +1,5 @@
 package com.example.demo.domain.member;
+import com.example.demo.rest.request.SignUpDTO;
 import lombok.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -32,6 +33,15 @@ public class MemberDTO {
                 .username(username)
                 .email(email)
                 .password(password1)
+                .build();
+    }
+
+    public SignUpDTO toSignUpDto() {
+        return SignUpDTO.builder()
+                .username(username)
+                .email(email)
+                .password(password1)
+                .password_confirm(password2)
                 .build();
     }
 

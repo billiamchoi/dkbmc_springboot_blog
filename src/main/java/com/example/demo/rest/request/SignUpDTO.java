@@ -1,10 +1,12 @@
 package com.example.demo.rest.request;
 
 import com.example.demo.domain.member.MemberDTO;
+import lombok.Builder;
 import lombok.Data;
 
 // rest api로 회원가입 요청시 사용하는 DTO 객체
 @Data
+@Builder
 public class SignUpDTO {
 
     private String username;
