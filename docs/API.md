@@ -54,14 +54,14 @@ POST
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":        "<데이터베이스의 member id>",
-            "username":  "<사용자아이디>",
-            "email":     "<이메일>",
-            "password1": "<해쉬된 비밀번호>",
-            "password2": "<해쉬된 비밀번호 확인>"
+            "id":        "<member id>",
+            "username":  "<username>",
+            "email":     "<email>",
+            "password1": "<password>",
+            "password2": "<password_confirm>"
         }
     }
 ``` 
@@ -102,7 +102,7 @@ POST
 
 ```json
     {
-        "access_token": "<JWT 토큰>"
+        "access_token": "<JWT Token>"
     }
 ``` 
 
@@ -136,16 +136,16 @@ POST
 
 ```json
     {
-        "status": "<상태메세지>",
-        "message": "<메세지>",
+        "status": "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "subject":     "<질문 제목>",
-            "content":     "<질문 내용>",
-            "author_id":   "<글쓴이 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<question id>",
+            "subject":     "<question subject>",
+            "content":     "<question content>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of question vote>",
+            "create_date": "<created date of question>",
+            "modify_date": "<modified date of question>"
         }
     }
 ``` 
@@ -171,17 +171,16 @@ POST
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "subject":     "<질문 제목>",
-            "content":     "<질문 내용>",
-            "question_id": "<질문이 속한 질문 id>",
-            "author_id":   "<질문 글쓴이의 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<question id>",
+            "subject":     "<question subject>",
+            "content":     "<question content>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of question vote>",
+            "create_date": "<created date of question>",
+            "modify_date": "<modified date of question>"
         }
     }
 ``` 
@@ -208,17 +207,17 @@ GET
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": [
             {
-                "id":          "<질문 id>",
-                "subject":     "<질문 제목>",
-                "content":     "<질문 내용>",
-                "author_id":   "<글쓴이 id>",
-                "vote_count":  "<질문 추천 수>",
-                "create_date": "<질문 생성일시>",
-                "modify_date": "<질문 수정일시>"
+                "id":          "<question id>",
+                "subject":     "<question subject>",
+                "content":     "<question content>",
+                "author_id":   "<author id>",
+                "vote_count":  "<number of question vote>",
+                "create_date": "<created date of question>",
+                "modify_date": "<modified date of question>"
             },
         ]
     }
@@ -246,16 +245,16 @@ GET
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "subject":     "<질문 제목>",
-            "content":     "<질문 내용>",
-            "author_id":   "<글쓴이 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<question id>",
+            "subject":     "<question subject>",
+            "content":     "<question content>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of question vote>",
+            "create_date": "<created date of question>",
+            "modify_date": "<modified date of question>"
         }
     }
 ``` 
@@ -290,16 +289,16 @@ PUT
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "subject":     "<질문 제목>",
-            "content":     "<질문 내용>",
-            "author_id":   "<글쓴이 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<question id>",
+            "subject":     "<question subject>",
+            "content":     "<question content>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of question vote>",
+            "create_date": "<created date of question>",
+            "modify_date": "<modified date of question>"
         }
     }
 ``` 
@@ -326,8 +325,8 @@ DELETE
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<삭제성공 여부>",
+        "status":  "<status message>",
+        "message": "<success or fail>",
         "data": null
     }
 ``` 
@@ -360,15 +359,16 @@ POST
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "content":     "<질문 내용>",
-            "author_id":   "<글쓴이 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<answer id>",
+            "content":     "<answer content>",
+            "question_id": "<question id to which the answer belongs>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of answer vote>",
+            "create_date": "<created date of answer>",
+            "modify_date": "<modified date of answer>"
         }
     }
 ``` 
@@ -395,16 +395,16 @@ POST
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<답변 id>",
-            "content":     "<답변 내용>",
-            "question_id": "<답변이 속한 질문 id>",
-            "author_id":   "<답변 글쓴이의 id>",
-            "vote_count":  "<답변 추천 수>",
-            "create_date": "<답변 생성일시>",
-            "modify_date": "<답변 수정일시>"
+            "id":          "<answer id>",
+            "content":     "<answer content>",
+            "question_id": "<question id to which the answer belongs>",
+            "author_id":   "<author id>",
+            "vote_count":  "<number of answer vote>",
+            "create_date": "<created date of answer>",
+            "modify_date": "<modified date of answer>"
         }
     }   
 ``` 
@@ -430,16 +430,17 @@ GET
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": [
             {
-                "id":          "<질문 id>",
-                "content":     "<답변 내용>",
-                "author_id":   "<글쓴이 id>",
-                "vote_count":  "<질문 추천 수>",
-                "create_date": "<질문 생성일시>",
-                "modify_date": "<질문 수정일시>"
+                "id":          "<answer id>",
+                "content":     "<answer content>",
+                "author_id":   "<author id>",
+                "question_id": "<question id to which the answer belongs>",                
+                "vote_count":  "<number of answer vote>",
+                "create_date": "<created date of answer>",
+                "modify_date": "<modified date of answer>"
             },
         ]
     }
@@ -472,15 +473,16 @@ POST
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<메세지>",
+        "status":  "<status message>",
+        "message": "<message>",
         "data": {
-            "id":          "<질문 id>",
-            "content":     "<답변 내용>",
-            "author_id":   "<글쓴이 id>",
-            "vote_count":  "<질문 추천 수>",
-            "create_date": "<질문 생성일시>",
-            "modify_date": "<질문 수정일시>"
+            "id":          "<answer id>",
+            "content":     "<answer content>",
+            "author_id":   "<author id>",
+            "question_id": "<question id to which the answer belongs>",
+            "vote_count":  "<number of answer vote>",
+            "create_date": "<created date of answer>",
+            "modify_date": "<modified date of answer>"
         }
     }
 ``` 
@@ -507,8 +509,8 @@ DELETE
 
 ```json
     {
-        "status":  "<상태메세지>",
-        "message": "<삭제성공 여부>",
+        "status":  "<status message>",
+        "message": "<success or fail>",
         "data": null
     }
 ``` 
