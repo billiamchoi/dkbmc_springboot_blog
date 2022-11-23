@@ -14,6 +14,7 @@ import com.example.demo.rest.response.QuestionResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.question.QuestionDTO;
@@ -122,7 +123,7 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public List<QuestionResponseDTO> restGetAll() {
 
-		List<Question> questionList = questionRepository.findAll();
+		List<Question> questionList = questionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		List<QuestionResponseDTO> questionResponseDtoList = new ArrayList<QuestionResponseDTO>();
 
 		for (Question q : questionList) {
